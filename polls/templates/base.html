@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Bar Example</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+  <!-- Top Bar -->
+  <header class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <!-- Left: Logo + Navigation -->
+        <div class="flex items-center space-x-8">
+          <div class="text-xl font-bold text-blue-600">
+            SuggestMetrics
+          </div>
+
+          <!-- Navigation Links -->
+          <nav class="hidden md:flex space-x-6 text-gray-700">
+            <a href="#" class="hover:text-blue-600 transition">Home</a>
+            <a href="#" class="hover:text-blue-600 transition">About</a>
+            <a href="#" class="hover:text-blue-600 transition">Metrics Explained</a>
+          </nav>
+        </div>
+
+        <!-- Right: Log in Button -->
+        <div class="hidden md:block">
+          <a href="#" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+            Log in
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <form>
+    <label for="task">Choose a task:</label>
+    <select id="task" name="task" required>
+        <option value="classification">Classification</option>
+        <option value="regression">Regression</option>
+        <option value="clustering">Clustering</option>
+    </select>
+    <input type="file" accept="text/csv" name="user_data" required/>
+    <button type="submit">Upload</button>
+  </form>
+
+</body>
+</html>
