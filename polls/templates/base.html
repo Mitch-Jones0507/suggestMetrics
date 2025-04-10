@@ -35,7 +35,8 @@
     </div>
   </header>
 
-  <form>
+  <form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
     <label for="task">Choose a task:</label>
     <select id="task" name="task" required>
         <option value="classification">Classification</option>
