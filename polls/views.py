@@ -1,17 +1,15 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-import pandas as pd
 
 from polls.analysis_module.handle_user_input import analysis_module
+
 
 def index(request):
     return render(request, "base.html")
 
 def home(request):
-    print(request.GET)
-    query = request.GET
+    query = request.POST
     task = query.get("task")
-    file = query.get("user_data")
+    file = request.FILES.get("user_data")
     analysis_module(task, file)
     return render(request, "home.html")
 
