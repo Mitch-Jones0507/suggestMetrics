@@ -8,4 +8,6 @@ urlpatterns = [
     path("/clustering", views.clustering, name="clustering"),
     path("/regression", views.regression, name="regression"),
     path("/classification", views.classification, name="classification"),
+    path("/about", views.about, name="about"),
+    path("/metricsExplained", views.metricsExplained, name="metricsExplained")
 ]

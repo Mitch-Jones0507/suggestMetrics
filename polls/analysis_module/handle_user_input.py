@@ -9,8 +9,8 @@ def analysis_module(option, file):
         if option == 'regression':
             df = pd.read_csv(file)
             print(df.head())
-            x = sm.add_constant(df[['pH', 'free sulfur dioxide','residual sugar']])
-            y = df['citric acid']
+            x = sm.add_constant(df[['pH']])
+            y = df['residual sugar']
             model = sm.OLS(y, x).fit()
             influence = model.get_influence()
             cooks_d, _ = influence.cooks_distance
@@ -19,5 +19,8 @@ def analysis_module(option, file):
             print("Influential points (potential outliers):", influential_points)
             percentage = len(influential_points) / len(df) * 100
             print("Percentage of influential points:", percentage)
+            data = df[['pH', 'total sulfur dioxide']].values.tolist()
+            return data, percentage
         elif option == 'classification':
             print("classification")
+            return 0

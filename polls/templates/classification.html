@@ -80,8 +80,8 @@
           <!-- Navigation Links -->
           <nav class="hidden md:flex space-x-6 text-gray-700">
             <a href="/suggestMetrics" class="hover:text-blue-600 transition">Home</a>
-            <a href="#" class="hover:text-blue-600 transition">About</a>
-            <a href="#" class="hover:text-blue-600 transition">Metrics Explained</a>
+            <a href="/suggestMetrics/about" class="hover:text-blue-600 transition">About</a>
+            <a href="/suggestMetrics/metricsExplained" class="hover:text-blue-600 transition">Metrics Explained</a>
           </nav>
         </div>
 
@@ -132,6 +132,8 @@
       <div class="value">Value: <span id="value6">50</span></div>
     </div>
   </div>
+
+  {{ result }}
 
   <script>
     for (let i = 1; i <= 6; i++) {
