@@ -80,8 +80,8 @@
           <!-- Navigation Links -->
           <nav class="hidden md:flex space-x-6 text-gray-700">
             <a href="/suggestMetrics" class="hover:text-blue-600 transition">Home</a>
-            <a href="#" class="hover:text-blue-600 transition">About</a>
-            <a href="#" class="hover:text-blue-600 transition">Metrics Explained</a>
+            <a href="/suggestMetrics/about" class="hover:text-blue-600 transition">About</a>
+            <a href="/suggestMetrics/metricsExplained" class="hover:text-blue-600 transition">Metrics Explained</a>
           </nav>
         </div>
 
@@ -132,6 +132,26 @@
       <div class="value">Value: <span id="value6">50</span></div>
     </div>
   </div>
+
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+
+  <div id="container"></div>
+
+<script>
+    const data = {{ result.0|safe }};
+  Highcharts.chart('container', {
+    chart: { type: 'scatter' },
+    title: { text: 'regression data' },
+    series: [{
+      name: '示例数据',
+        marker: {
+          radius: 2},
+      data: data
+    }]
+  });
+</script>
+
+  <p> Percentage of outliers within the dataset is: {{ result.1 }}% </p>
 
   <script>
     for (let i = 1; i <= 6; i++) {

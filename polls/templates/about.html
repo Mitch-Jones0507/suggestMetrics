@@ -95,53 +95,5 @@
     </div>
   </header>
 
-  <div class="slider-group">
-    <div class="slider-block">
-      <label for="slider1">Ground Truth Labels</label>
-      <input type="range" id="slider1" min="0" max="100" value="50">
-      <div class="value">Value: <span id="value1">50</span></div>
-    </div>
-
-    <div class="slider-block">
-      <label for="slider2">Similarities to Known Clusters</label>
-      <input type="range" id="slider2" min="0" max="100" value="50">
-      <div class="value">Value: <span id="value2">50</span></div>
-    </div>
-
-    <div class="slider-block">
-      <label for="slider3">Percentage Outliers</label>
-      <input type="range" id="slider3" min="0" max="100" value="50">
-      <div class="value">Value: <span id="value3">50</span></div>
-    </div>
-
-    <div class="slider-block">
-      <label for="slider4">Percentage Split Between Clusters</label>
-      <input type="range" id="slider4" min="0" max="100" value="50">
-      <div class="value">Value: <span id="value4">50</span></div>
-    </div>
-
-    <div class="slider-block">
-      <label for="slider5">Cluster Convexity</label>
-      <input type="range" id="slider5" min="0" max="100" value="50">
-      <div class="value">Value: <span id="value5">50</span></div>
-    </div>
-
-    <div class="slider-block">
-      <label for="slider6">Cohesion and Separation</label>
-      <input type="range" id="slider6" min="0" max="100" value="50">
-      <div class="value">Value: <span id="value6">50</span></div>
-    </div>
-  </div>
-
-  <script>
-    for (let i = 1; i <= 6; i++) {
-      const slider = document.getElementById(`slider${i}`);
-      const output = document.getElementById(`value${i}`);
-      slider.addEventListener('input', () => {
-        output.textContent = slider.value;
-      });
-    }
-  </script>
-
 </body>
 </html>
