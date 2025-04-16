@@ -1,51 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Top Bar Example</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Bar Example</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
-  <!-- Top Bar -->
-  <header class="bg-white shadow-md">
+<!-- Top Bar -->
+<header class="bg-white shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16 items-center">
-        <!-- Left: Logo + Navigation -->
-        <div class="flex items-center space-x-8">
-          <div class="text-xl font-bold text-blue-600">
-            SuggestMetrics
-          </div>
+        <div class="flex justify-between h-16 items-center">
+            <!-- Left: Logo + Navigation -->
+            <div class="flex items-center space-x-8">
+                <div class="text-xl font-bold text-blue-600">
+                    SuggestMetrics
+                </div>
 
-          <!-- Navigation Links -->
-          <nav class="hidden md:flex space-x-6 text-gray-700">
-               <a href="/suggestMetrics" class="hover:text-blue-600 transition">Home</a>
-            <a href="/suggestMetrics/about" class="hover:text-blue-600 transition">About</a>
-            <a href="/suggestMetrics/metricsExplained" class="hover:text-blue-600 transition">Metrics Explained</a>
-          </nav>
-        </div>
+                <!-- Navigation Links -->
+                <nav class="hidden md:flex space-x-6 text-gray-700">
+                    <a href="/suggestMetrics" class="hover:text-blue-600 transition">Home</a>
+                    <a href="/suggestMetrics/about" class="hover:text-blue-600 transition">About</a>
+                    <a href="/suggestMetrics/metricsExplained" class="hover:text-blue-600 transition">Metrics
+                        Explained</a>
+                </nav>
+            </div>
 
-        <!-- Right: Log in Button -->
-        <div class="hidden md:block">
-          <a href="#" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-            Log in
-          </a>
+            <!-- Right: Log in Button -->
+            <div class="hidden md:block">
+                <a href="#" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                    Log in
+                </a>
+            </div>
         </div>
-      </div>
     </div>
-  </header>
+</header>
 
-  <form method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
     <label for="task">Choose a task:</label>
     <select id="task" name="task" required>
         <option value="classification">Classification</option>
         <option value="regression">Regression</option>
         <option value="clustering">Clustering</option>
     </select>
-    <input type="file" accept="text/csv" name="user_data" required/>
-    <button type="submit">Upload</button>
-  </form>
+    <input type="file" accept="text/csv" id="userData" name="user_data" required/>
+    <div id="columnSelector" style="display: none;">
+        <label for="features">Choose the feature columns:</label>
+        <div id="features"></div>
 
+        <label for="target">Choose the column to predict:</label>
+        <select name="target" id="target" required></select>
+    </div>
+    <button type="submit">Upload</button>
+</form>
+
+<script>
+    document.getElementById('userData').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const text = e.target.result;
+            const lines = text.split(/\r\n|\n/);
+            const headerLine = lines[0].replace(/^\uFEFF/, '');
+            const headers = headerLine.split(',');
+
+            const features = document.getElementById('features');
+            const target = document.getElementById('target');
+            const columnSelector = document.getElementById('columnSelector');
+
+            // 清空并填充下拉框选项
+            features.innerHTML = '';
+            target.innerHTML = '';
+
+            headers.forEach((header, index) => {
+                const cleanHeader = header.trim();
+                const option = new Option(cleanHeader, cleanHeader);
+                target.add(option);
+
+                // 创建多选 checkbox
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.name = 'features';  // 注意加 [] 表示多值字段
+                checkbox.value = cleanHeader;
+                checkbox.id = `features_${index}`;
+
+                const label = document.createElement('label');
+                label.htmlFor = `features_${index}`;
+                label.style.marginRight = '12px';
+                label.appendChild(checkbox);
+                label.appendChild(document.createTextNode(` ${cleanHeader}`));
+
+                features.appendChild(label);
+            });
+
+            // 显示下拉框
+            columnSelector.style.display = 'block';
+        };
+
+        reader.readAsText(file);
+    });
+</script>
 </body>
 </html>

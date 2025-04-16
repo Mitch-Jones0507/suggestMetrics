@@ -12,156 +12,158 @@
     <meta charset="UTF-8">
     <title>Range Slider</title>
 
-  <style>
-    body {
-      font-family: sans-serif;
-      background-color: #f9f9f9;
-      margin: 0;
-      padding: 20px;
-    }
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
 
-    .slider-group {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      max-width: 300px;
-      gap: 20px;
-    }
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            max-width: 300px;
+            gap: 20px;
+        }
 
-    .slider-block {
-      width: 100%;
-    }
+        .slider-block {
+            width: 100%;
+        }
 
-    label {
-      display: block;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 5px;
-      color: #333;
-    }
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
 
-    input[type="range"] {
-      width: 100%;
-      appearance: none;
-      height: 4px;
-      background: #ccc;
-      border-radius: 2px;
-    }
+        input[type="range"] {
+            width: 100%;
+            appearance: none;
+            height: 4px;
+            background: #ccc;
+            border-radius: 2px;
+        }
 
-    input[type="range"]::-webkit-slider-thumb {
-      appearance: none;
-      height: 12px;
-      width: 12px;
-      background: #333;
-      border-radius: 50%;
-      cursor: pointer;
-      margin-top: -4px;
-    }
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            height: 12px;
+            width: 12px;
+            background: #333;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-top: -4px;
+        }
 
-    .value {
-      font-size: 13px;
-      color: #555;
-      margin-top: 3px;
-    }
-  </style>
+        .value {
+            font-size: 13px;
+            color: #555;
+            margin-top: 3px;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100">
-  <!-- Top Bar -->
-  <header class="bg-white shadow-md">
+<!-- Top Bar -->
+<header class="bg-white shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16 items-center">
-        <!-- Left: Logo + Navigation -->
-        <div class="flex items-center space-x-8">
-          <div class="text-xl font-bold text-blue-600">
-            SuggestMetrics
-          </div>
+        <div class="flex justify-between h-16 items-center">
+            <!-- Left: Logo + Navigation -->
+            <div class="flex items-center space-x-8">
+                <div class="text-xl font-bold text-blue-600">
+                    SuggestMetrics
+                </div>
 
-          <!-- Navigation Links -->
-          <nav class="hidden md:flex space-x-6 text-gray-700">
-            <a href="/suggestMetrics" class="hover:text-blue-600 transition">Home</a>
-            <a href="/suggestMetrics/about" class="hover:text-blue-600 transition">About</a>
-            <a href="/suggestMetrics/metricsExplained" class="hover:text-blue-600 transition">Metrics Explained</a>
-          </nav>
+                <!-- Navigation Links -->
+                <nav class="hidden md:flex space-x-6 text-gray-700">
+                    <a href="/suggestMetrics" class="hover:text-blue-600 transition">Home</a>
+                    <a href="/suggestMetrics/about" class="hover:text-blue-600 transition">About</a>
+                    <a href="/suggestMetrics/metricsExplained" class="hover:text-blue-600 transition">Metrics
+                        Explained</a>
+                </nav>
+            </div>
+
+            <!-- Right: Log in Button -->
+            <div class="hidden md:block">
+                <a href="#" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                    Log in
+                </a>
+            </div>
         </div>
-
-        <!-- Right: Log in Button -->
-        <div class="hidden md:block">
-          <a href="#" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-            Log in
-          </a>
-        </div>
-      </div>
     </div>
-  </header>
+</header>
 
-  <div class="slider-group">
+<div class="slider-group">
     <div class="slider-block">
-      <label for="slider1">Ground Truth Labels</label>
-      <input type="range" id="slider1" min="0" max="100" value="50">
-      <div class="value">Value: <span id="value1">50</span></div>
+        <label for="slider1">Ground Truth Labels</label>
+        <input type="range" id="slider1" min="0" max="100" value="50">
+        <div class="value">Value: <span id="value1">50</span></div>
     </div>
 
     <div class="slider-block">
-      <label for="slider2">Similarities to Known Clusters</label>
-      <input type="range" id="slider2" min="0" max="100" value="50">
-      <div class="value">Value: <span id="value2">50</span></div>
+        <label for="slider2">Similarities to Known Clusters</label>
+        <input type="range" id="slider2" min="0" max="100" value="50">
+        <div class="value">Value: <span id="value2">50</span></div>
     </div>
 
     <div class="slider-block">
-      <label for="slider3">Percentage Outliers</label>
-      <input type="range" id="slider3" min="0" max="100" value="50">
-      <div class="value">Value: <span id="value3">50</span></div>
+        <label for="slider3">Percentage Outliers</label>
+        <input type="range" id="slider3" min="0" max="100" value="50">
+        <div class="value">Value: <span id="value3">50</span></div>
     </div>
 
     <div class="slider-block">
-      <label for="slider4">Percentage Split Between Clusters</label>
-      <input type="range" id="slider4" min="0" max="100" value="50">
-      <div class="value">Value: <span id="value4">50</span></div>
+        <label for="slider4">Percentage Split Between Clusters</label>
+        <input type="range" id="slider4" min="0" max="100" value="50">
+        <div class="value">Value: <span id="value4">50</span></div>
     </div>
 
     <div class="slider-block">
-      <label for="slider5">Cluster Convexity</label>
-      <input type="range" id="slider5" min="0" max="100" value="50">
-      <div class="value">Value: <span id="value5">50</span></div>
+        <label for="slider5">Cluster Convexity</label>
+        <input type="range" id="slider5" min="0" max="100" value="50">
+        <div class="value">Value: <span id="value5">50</span></div>
     </div>
 
     <div class="slider-block">
-      <label for="slider6">Cohesion and Separation</label>
-      <input type="range" id="slider6" min="0" max="100" value="50">
-      <div class="value">Value: <span id="value6">50</span></div>
+        <label for="slider6">Cohesion and Separation</label>
+        <input type="range" id="slider6" min="0" max="100" value="50">
+        <div class="value">Value: <span id="value6">50</span></div>
     </div>
-  </div>
+</div>
 
-  <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
 
-  <div id="container"></div>
+<div id="container"></div>
 
 <script>
     const data = {{ result.0|safe }};
-  Highcharts.chart('container', {
-    chart: { type: 'scatter' },
-    title: { text: 'regression data' },
-    series: [{
-      name: '示例数据',
-        marker: {
-          radius: 2},
-      data: data
-    }]
-  });
+    Highcharts.chart('container', {
+        chart: {type: 'scatter'},
+        title: {text: 'regression data'},
+        series: [{
+            name: 'example data',
+            marker: {
+                radius: 2
+            },
+            data: data
+        }]
+    });
 </script>
 
-  <p> Percentage of outliers within the dataset is: {{ result.1 }}% </p>
+<p> Percentage of outliers within the dataset is: {{ result.1 }}% </p>
 
-  <script>
+<script>
     for (let i = 1; i <= 6; i++) {
-      const slider = document.getElementById(`slider${i}`);
-      const output = document.getElementById(`value${i}`);
-      slider.addEventListener('input', () => {
-        output.textContent = slider.value;
-      });
+        const slider = document.getElementById(`slider${i}`);
+        const output = document.getElementById(`value${i}`);
+        slider.addEventListener('input', () => {
+            output.textContent = slider.value;
+        });
     }
-  </script>
+</script>
 
 </body>
 </html>
