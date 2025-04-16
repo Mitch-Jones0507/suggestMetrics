@@ -71,7 +71,6 @@
             const target = document.getElementById('target');
             const columnSelector = document.getElementById('columnSelector');
 
-            // 清空并填充下拉框选项
             features.innerHTML = '';
             target.innerHTML = '';
 
@@ -80,10 +79,9 @@
                 const option = new Option(cleanHeader, cleanHeader);
                 target.add(option);
 
-                // 创建多选 checkbox
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
-                checkbox.name = 'features';  // 注意加 [] 表示多值字段
+                checkbox.name = 'features';
                 checkbox.value = cleanHeader;
                 checkbox.id = `features_${index}`;
 
@@ -96,7 +94,6 @@
                 features.appendChild(label);
             });
 
-            // 显示下拉框
             columnSelector.style.display = 'block';
         };
 
