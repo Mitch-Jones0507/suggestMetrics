@@ -6,6 +6,7 @@ import statsmodels.api as sm
 def analysis_module(option, file, features, target):
     df = pd.read_csv(file)
     result = {}
+    data_input = features + [target]
     if option == 'regression':
         x = sm.add_constant(df[features])
         y = df[target]
@@ -18,7 +19,7 @@ def analysis_module(option, file, features, target):
         percentage = len(influential_points) / len(df) * 100
         print("Percentage of influential points:", percentage)
         # TODO: Which feature should be returned?
-        data = df[['pH', 'total sulfur dioxide']].values.tolist()
+        data = df[data_input].values.tolist()
         return data, percentage
     elif option == 'classification':
         class_counter = df[target].value_counts().to_dict()

@@ -15,6 +15,7 @@ def home(request):
     target = query.get("target")
     if task:
         result = analysis_module(task, file, features, target)
+        print(result)
         return render(request, f"{task}.html", {"result": result})
     return render(request, "home.html")
 
