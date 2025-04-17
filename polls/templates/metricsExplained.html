@@ -5,7 +5,66 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Top Bar Example</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+    * { box-sizing: border-box; }
+    body { font-family: sans-serif; }
+
+    .carousel {
+      width: 600px;
+      margin: 50px auto;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-item {
+      min-width: 100%;
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+
+    .carousel-item img {
+      max-width: 40%;
+      height: auto;
+      margin-right: 20px;
+      border-radius: 8px;
+    }
+
+    .carousel-item .text {
+      flex: 1;
+    }
+
+    .carousel-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .carousel-button.prev {
+      left: 10px;
+    }
+
+    .carousel-button.next {
+      right: 10px;
+    }
+  </style>
 </head>
+
 <body class="bg-gray-100">
   <!-- Top Bar -->
   <header class="bg-white shadow-md">
@@ -35,5 +94,48 @@
     </div>
   </header>
 
+<div class="carousel">
+  <div class="carousel-track" id="carouselTrack">
+    <div class="carousel-item">
+      <img src="https://via.placeholder.com/200x150" alt="Image 1">
+      <div class="text">
+        <h3>Classification</h3>
+        <p>*CLASSIFICATION EXPLAINED*</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://via.placeholder.com/200x150" alt="Image 2">
+      <div class="text">
+        <h3>Clustering</h3>
+        <p>*CLUSTERING EXPLAINED*</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://via.placeholder.com/200x150" alt="Image 3">
+      <div class="text">
+        <h3>Regression</h3>
+        <p>*REGRESSION EXPLAINED*</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="carousel-button prev" onclick="moveSlide(-1)">❮</button>
+  <button class="carousel-button next" onclick="moveSlide(1)">❯</button>
+</div>
+
+<script>
+  const track = document.getElementById('carouselTrack');
+  const slides = document.querySelectorAll('.carousel-item');
+  let currentIndex = 0;
+
+  function moveSlide(direction) {
+    currentIndex += direction;
+    if (currentIndex < 0) currentIndex = slides.length - 1;
+    if (currentIndex >= slides.length) currentIndex = 0;
+
+    const offset = -currentIndex * 600; // width of .carousel
+    track.style.transform = `translateX(${offset}px)`;
+  }
+</script>
 </body>
 </html>
