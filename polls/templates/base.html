@@ -75,6 +75,7 @@
         if (!file) return;
 
         const task = document.getElementById('task').value;
+
         if (task === 'regression') {
             const reader = new FileReader();
             reader.onload = function (e) {
