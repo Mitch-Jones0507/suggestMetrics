@@ -6,7 +6,6 @@
     <title>Top Bar Example</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100">
 <!-- Top Bar -->
 <header class="bg-white shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -35,16 +34,24 @@
         </div>
     </div>
 </header>
-
-<form method="POST" enctype="multipart/form-data">
+<body class="bg-gray-100">
+<form method="POST" enctype="multipart/form-data"
+      class="flex flex-col gap-4 w-[600px] justify-start bg-gray-300 rounded-xl"
+      id="base_form"
+>
     {% csrf_token %}
-    <label for="task">Choose a task:</label>
-    <select id="task" name="task" required>
-        <option value="classification">Classification</option>
-        <option value="regression">Regression</option>
-        <option value="clustering">Clustering</option>
-    </select>
-    <input type="file" accept="text/csv" id="userData" name="user_data" required/>
+    <fieldset>
+        <label for="task">Choose a task:</label>
+        <select id="task" name="task" required>
+            <option value="classification">Classification</option>
+            <option value="regression">Regression</option>
+            <option value="clustering">Clustering</option>
+        </select>
+    </fieldset>
+    <fieldset>
+        <label for="user_data">Choose a csv file:</label>
+        <input type="file" accept="text/csv" id="userData" name="user_data" required/>
+    </fieldset>
     <div id="columnSelector" style="display: none;">
         <label for="features">Choose the feature columns:</label>
         <div id="features"></div>
@@ -56,48 +63,62 @@
 </form>
 
 <script>
-    document.getElementById('userData').addEventListener('change', function (event) {
-        const file = event.target.files[0];
+    document.getElementById("base_form").addEventListener('change', (event) => {
+        const eventType = event.target.id
+        console.log(eventType)
+        if (eventType !== "task" && eventType !== "userData") return;
+
+        const columnSelector = document.getElementById('columnSelector');
+        columnSelector.style.display = 'none';
+
+        const file = document.getElementById('userData').files[0];
         if (!file) return;
 
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            const text = e.target.result;
-            const lines = text.split(/\r\n|\n/);
-            const headerLine = lines[0].replace(/^\uFEFF/, '');
-            const headers = headerLine.split(',');
+        const task = document.getElementById('task').value;
 
-            const features = document.getElementById('features');
-            const target = document.getElementById('target');
-            const columnSelector = document.getElementById('columnSelector');
+        if (task === 'regression') {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const text = e.target.result;
+                const lines = text.split(/\r\n|\n/);
+                const headerLine = lines[0].replace(/^\uFEFF/, '');
+                const headers = headerLine.split(',');
 
-            features.innerHTML = '';
-            target.innerHTML = '';
+                const features = document.getElementById('features');
+                const target = document.getElementById('target');
 
-            headers.forEach((header, index) => {
-                const cleanHeader = header.trim();
-                const option = new Option(cleanHeader, cleanHeader);
-                target.add(option);
+                features.innerHTML = '';
+                target.innerHTML = '';
 
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.name = 'features';
-                checkbox.value = cleanHeader;
-                checkbox.id = `features_${index}`;
+                headers.forEach((header, index) => {
+                    const cleanHeader = header.trim();
+                    const option = new Option(cleanHeader, cleanHeader);
+                    target.add(option);
 
-                const label = document.createElement('label');
-                label.htmlFor = `features_${index}`;
-                label.style.marginRight = '12px';
-                label.appendChild(checkbox);
-                label.appendChild(document.createTextNode(` ${cleanHeader}`));
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.name = 'features';
+                    checkbox.value = cleanHeader;
+                    checkbox.id = `features_${index}`;
 
-                features.appendChild(label);
-            });
+                    const label = document.createElement('label');
+                    label.htmlFor = `features_${index}`;
+                    label.style.marginRight = '12px';
+                    label.appendChild(checkbox);
+                    label.appendChild(document.createTextNode(` ${cleanHeader}`));
 
-            columnSelector.style.display = 'block';
-        };
+                    features.appendChild(label);
+                });
 
-        reader.readAsText(file);
+                columnSelector.style.display = 'block';
+            };
+
+            reader.readAsText(file);
+        }
+        if (task === 'classification') {
+
+        }
+
     });
 </script>
 </body>
