@@ -21,6 +21,7 @@ def analysis_module(option, file, features, target):
         percentage = len(influential_points) / len(df) * 100
         print("Percentage of influential points:", percentage)
         # TODO: Which feature should be returned?
+        data_input = features + [target]
         data = df[data_input].values.tolist()
         return data, percentage
     elif option == 'classification':
@@ -34,4 +35,18 @@ def analysis_module(option, file, features, target):
         else:
             # TODO: imbalance degree
             print('multiclass classification')
-        return result
+            empirical_distribution = list(class_counter.values())
+            mean = sum(empirical_distribution) / len(empirical_distribution)
+            balanced_distribution = [mean] * len(empirical_distribution)
+            majority_class = max(empirical_distribution)
+            minority_classes = [x for x in empirical_distribution if x != majority_class]
+            num_minority_classes = len(minority_classes)
+            max_diff_val = max(minority_classes, key=lambda x: abs(x - mean))
+
+            data = df[target].values.tolist()
+            balanced_distribution = class_counter.values()
+            # empirical distribution
+            # balanced distribution
+            # number of minority classes
+            # distribution of minority classes furthest from the balanced distribution
+        return data, result
