@@ -15,10 +15,11 @@ def home(request):
     if task:
         (data, result) = analysis_module(task, file, features, target)
         print(data)
-        if len(data[0]) == 3:
-            data_min = [min(sublist[0] for sublist in data for item in sublist),min(sublist[1] for sublist in data for item in sublist),min(sublist[2] for sublist in data for item in sublist)]
-            data_max = [max(sublist[0] for sublist in data for item in sublist),max(sublist[1] for sublist in data for item in sublist),max(sublist[2] for sublist in data for item in sublist)]
-            data = [data,data_min,data_max]
+        if task == 'clustering' or 'regression':
+            if len(data[0]) == 3:
+                data_min = [min(sublist[0] for sublist in data for item in sublist),min(sublist[1] for sublist in data for item in sublist),min(sublist[2] for sublist in data for item in sublist)]
+                data_max = [max(sublist[0] for sublist in data for item in sublist),max(sublist[1] for sublist in data for item in sublist),max(sublist[2] for sublist in data for item in sublist)]
+                data = [data,data_min,data_max]
         return render(request, f"{task}.html", {"result": result, "data": data})
     return render(request, "home.html")
 
