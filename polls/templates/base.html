@@ -52,135 +52,94 @@
         <label for="user_data">Choose a csv file:</label>
         <input type="file" accept="text/csv" id="userData" name="user_data" required/>
     </fieldset>
-    <div id="columnSelector" style="display: none;">
-        <label for="features">Choose the feature columns:</label>
-        <div id="features"></div>
-
-        <label for="target">Choose the column to predict:</label>
-        <select name="target" id="target" required></select>
-    </div>
+    <div id="columnSelector" style="display: none;"></div>
     <button type="submit">Upload</button>
 </form>
 
 <script>
     document.getElementById("base_form").addEventListener('change', (event) => {
         const eventType = event.target.id
-        console.log(eventType)
         if (eventType !== "task" && eventType !== "userData") return;
 
         const columnSelector = document.getElementById('columnSelector');
-        columnSelector.style.display = 'none';
 
         const file = document.getElementById('userData').files[0];
         if (!file) return;
 
         const task = document.getElementById('task').value;
 
-        if (task === 'regression') {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const text = e.target.result;
-                const lines = text.split(/\r\n|\n/);
-                const headerLine = lines[0].replace(/^\uFEFF/, '');
-                const headers = headerLine.split(',');
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const text = e.target.result;
+            const lines = text.split(/\r\n|\n/);
+            const headerLine = lines[0].replace(/^\uFEFF/, '');
+            const headers = headerLine.split(',');
 
-                const features = document.getElementById('features');
-                const target = document.getElementById('target');
+            columnSelector.innerHTML = '';
+            if (task === 'regression') {
+                generateCheckboxes(headers, columnSelector, 'Choose the feature columns:');
+                generateDropdown(headers, columnSelector, 'Choose the column to predict:');
+            } else if (task === 'classification') {
+                generateDropdown(headers, columnSelector, 'Choose the column of classes:');
+            } else if (task === 'clustering') {
+                generateCheckboxes(headers, columnSelector, 'Choose the feature columns:');
+            }
+        };
 
-                features.innerHTML = '';
-                target.innerHTML = '';
-
-                headers.forEach((header, index) => {
-                    const cleanHeader = header.trim();
-                    const option = new Option(cleanHeader, cleanHeader);
-                    target.add(option);
-
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.name = 'features';
-                    checkbox.value = cleanHeader;
-                    checkbox.id = `features_${index}`;
-
-                    const label = document.createElement('label');
-                    label.htmlFor = `features_${index}`;
-                    label.style.marginRight = '12px';
-                    label.appendChild(checkbox);
-                    label.appendChild(document.createTextNode(` ${cleanHeader}`));
-
-                    features.appendChild(label);
-                });
-
-                columnSelector.style.display = 'block';
-            };
-
-            reader.readAsText(file);
-        }
-        if (task === 'classification') {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const text = e.target.result;
-                const lines = text.split(/\r\n|\n/);
-                const headerLine = lines[0].replace(/^\uFEFF/, '');
-                const headers = headerLine.split(',');
-
-                const features = document.getElementById('features');
-                const target = document.getElementById('target');
-
-                features.innerHTML = '';
-                target.innerHTML = '';
-
-                headers.forEach(header => {
-                    const cleanHeader = header.trim();
-                    const option = new Option(cleanHeader, cleanHeader);
-                    target.add(option);
-                });
-
-                columnSelector.style.display = 'block';
-            };
-
-            reader.readAsText(file);
-        }
-        if (task === 'clustering') {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const text = e.target.result;
-                const lines = text.split(/\r\n|\n/);
-                const headerLine = lines[0].replace(/^\uFEFF/, '');
-                const headers = headerLine.split(',');
-
-                const features = document.getElementById('features');
-                const target = document.getElementById('target');
-
-                features.innerHTML = '';
-                target.innerHTML = '';
-
-                target.style.display='none'
-
-                headers.forEach((header, index) => {
-                    const cleanHeader = header.trim();
-
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.name = 'features';
-                    checkbox.value = cleanHeader;
-                    checkbox.id = `features_${index}`;
-
-                    const label = document.createElement('label');
-                    label.htmlFor = `features_${index}`;
-                    label.style.marginRight = '12px';
-                    label.appendChild(checkbox);
-                    label.appendChild(document.createTextNode(` ${cleanHeader}`));
-
-                    features.appendChild(label);
-                });
-
-                columnSelector.style.display = 'block';
-            };
-
-            reader.readAsText(file);
-        }
-
+        columnSelector.style.display = 'block';
+        reader.readAsText(file);
     });
+
+    function generateCheckboxes(headers, container, text) {
+        const label = document.createElement('label');
+        label.htmlFor = 'features';
+        label.textContent = text;
+        container.appendChild(label);
+
+        const featureGroup = document.createElement('div');
+        featureGroup.id = 'features';
+        featureGroup.name = 'features';
+
+        headers.forEach((header, index) => {
+            const cleanHeader = header.trim();
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.name = 'features';
+            checkbox.value = cleanHeader;
+            checkbox.id = `features_${index}`;
+
+            const label = document.createElement('label');
+            label.htmlFor = `features_${index}`;
+            label.style.marginRight = '12px';
+            label.appendChild(checkbox);
+            label.appendChild(document.createTextNode(` ${cleanHeader}`));
+
+            featureGroup.appendChild(label);
+        });
+
+        container.appendChild(featureGroup);
+    }
+
+    function generateDropdown(headers, container, text) {
+        const label = document.createElement('label');
+        label.htmlFor = 'target';
+        label.textContent = text;
+        container.appendChild(label);
+
+        const select = document.createElement('select');
+        select.name = 'target';
+        select.id = 'target';
+        select.required = true;
+
+        headers.forEach(header => {
+            const cleanHeader = header.trim();
+            const option = new Option(cleanHeader, cleanHeader);
+            select.add(option);
+        });
+
+        container.appendChild(select);
+    }
 </script>
 </body>
 </html>
