@@ -116,7 +116,29 @@
             reader.readAsText(file);
         }
         if (task === 'classification') {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const text = e.target.result;
+                const lines = text.split(/\r\n|\n/);
+                const headerLine = lines[0].replace(/^\uFEFF/, '');
+                const headers = headerLine.split(',');
 
+                const features = document.getElementById('features');
+                const target = document.getElementById('target');
+
+                features.innerHTML = '';
+                target.innerHTML = '';
+
+                headers.forEach(header => {
+                    const cleanHeader = header.trim();
+                    const option = new Option(cleanHeader, cleanHeader);
+                    target.add(option);
+                });
+
+                columnSelector.style.display = 'block';
+            };
+
+            reader.readAsText(file);
         }
 
     });
