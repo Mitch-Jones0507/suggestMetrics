@@ -57,7 +57,7 @@
         <div id="features"></div>
 
         <label for="target">Choose the column to predict:</label>
-        <select name="target" id="target" required></select>
+        <select name="target" id="target"></select>
     </div>
     <button type="submit">Upload</button>
 </form>
@@ -89,6 +89,8 @@
 
                 features.innerHTML = '';
                 target.innerHTML = '';
+
+                target.style.display='block'
 
                 headers.forEach((header, index) => {
                     const cleanHeader = header.trim();
@@ -128,6 +130,8 @@
 
                 features.innerHTML = '';
                 target.innerHTML = '';
+
+                target.style.display='block'
 
                 headers.forEach(header => {
                     const cleanHeader = header.trim();

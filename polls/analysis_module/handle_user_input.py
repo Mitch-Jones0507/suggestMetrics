@@ -50,3 +50,6 @@ def analysis_module(option, file, features, target):
             # number of minority classes
             # distribution of minority classes furthest from the balanced distribution
         return data, result
+    elif option == 'clustering':
+        data = df[features].values.tolist()
+        return data, None
