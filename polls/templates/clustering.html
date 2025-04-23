@@ -12,136 +12,275 @@
     <meta charset="UTF-8">
     <title>Range Slider</title>
 
-  <style>
-    body {
-      font-family: sans-serif;
-      background-color: #f9f9f9;
-      margin: 0;
-      padding: 20px;
-    }
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
 
-    .slider-group {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      max-width: 300px;
-      gap: 20px;
-    }
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            max-width: 300px;
+            gap: 20px;
+        }
 
-    .slider-block {
-      width: 100%;
-    }
+        .slider-block {
+            width: 100%;
+        }
 
-    label {
-      display: block;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 5px;
-      color: #333;
-    }
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
 
-    input[type="range"] {
-      width: 100%;
-      appearance: none;
-      height: 4px;
-      background: #ccc;
-      border-radius: 2px;
-    }
+        input[type="range"] {
+            width: 100%;
+            appearance: none;
+            height: 4px;
+            background: #ccc;
+            border-radius: 2px;
+        }
 
-    input[type="range"]::-webkit-slider-thumb {
-      appearance: none;
-      height: 12px;
-      width: 12px;
-      background: #333;
-      border-radius: 50%;
-      cursor: pointer;
-      margin-top: -4px;
-    }
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            height: 12px;
+            width: 12px;
+            background: #333;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-top: -4px;
+        }
 
-    .value {
-      font-size: 13px;
-      color: #555;
-      margin-top: 3px;
-    }
-  </style>
+        .value {
+            font-size: 13px;
+            color: #555;
+            margin-top: 3px;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100">
-  <!-- Top Bar -->
-  <header class="bg-white shadow-md">
+<!-- Top Bar -->
+<header class="bg-white shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16 items-center">
-        <!-- Left: Logo + Navigation -->
-        <div class="flex items-center space-x-8">
-          <div class="text-xl font-bold text-blue-600">
-            SuggestMetrics
-          </div>
+        <div class="flex justify-between h-16 items-center">
+            <!-- Left: Logo + Navigation -->
+            <div class="flex items-center space-x-8">
+                <div class="text-xl font-bold text-blue-600">
+                    SuggestMetrics
+                </div>
 
-          <!-- Navigation Links -->
-          <nav class="hidden md:flex space-x-6 text-gray-700">
-            <a href="/suggestMetrics" class="hover:text-blue-600 transition">Home</a>
-            <a href="/suggestMetrics/about" class="hover:text-blue-600 transition">About</a>
-            <a href="/suggestMetrics/metricsExplained" class="hover:text-blue-600 transition">Metrics Explained</a>
-          </nav>
+                <!-- Navigation Links -->
+                <nav class="hidden md:flex space-x-6 text-gray-700">
+                    <a href="/suggestMetrics" class="hover:text-blue-600 transition">Home</a>
+                    <a href="/suggestMetrics/about" class="hover:text-blue-600 transition">About</a>
+                    <a href="/suggestMetrics/metricsExplained" class="hover:text-blue-600 transition">Metrics
+                        Explained</a>
+                </nav>
+            </div>
+
+            <!-- Right: Log in Button -->
+            <div class="hidden md:block">
+                <a href="#" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                    Log in
+                </a>
+            </div>
         </div>
-
-        <!-- Right: Log in Button -->
-        <div class="hidden md:block">
-          <a href="#" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-            Log in
-          </a>
-        </div>
-      </div>
     </div>
-  </header>
+</header>
 
-  <div class="slider-group">
+<div class="slider-group">
     <div class="slider-block">
-      <label for="slider1">Ground Truth Labels</label>
-      <input type="range" id="slider1" min="0" max="100" value="50">
-      <div class="value">Value: <span id="value1">50</span></div>
+        <label for="slider1">Ground Truth Labels</label>
+        <input type="range" id="slider1" min="0" max="100" value="50">
+        <div class="value">Value: <span id="value1">50</span></div>
     </div>
 
     <div class="slider-block">
-      <label for="slider2">Similarities to Known Clusters</label>
-      <input type="range" id="slider2" min="0" max="100" value="50">
-      <div class="value">Value: <span id="value2">50</span></div>
+        <label for="slider2">Similarities to Known Clusters</label>
+        <input type="range" id="slider2" min="0" max="100" value="50">
+        <div class="value">Value: <span id="value2">50</span></div>
     </div>
 
     <div class="slider-block">
-      <label for="slider3">Percentage Outliers</label>
-      <input type="range" id="slider3" min="0" max="100" value="50">
-      <div class="value">Value: <span id="value3">50</span></div>
+        <label for="slider3">Percentage Outliers</label>
+        <input type="range" id="slider3" min="0" max="100" value="50">
+        <div class="value">Value: <span id="value3">50</span></div>
     </div>
 
     <div class="slider-block">
-      <label for="slider4">Percentage Split Between Clusters</label>
-      <input type="range" id="slider4" min="0" max="100" value="50">
-      <div class="value">Value: <span id="value4">50</span></div>
+        <label for="slider4">Percentage Split Between Clusters</label>
+        <input type="range" id="slider4" min="0" max="100" value="50">
+        <div class="value">Value: <span id="value4">50</span></div>
     </div>
 
     <div class="slider-block">
-      <label for="slider5">Cluster Convexity</label>
-      <input type="range" id="slider5" min="0" max="100" value="50">
-      <div class="value">Value: <span id="value5">50</span></div>
+        <label for="slider5">Cluster Convexity</label>
+        <input type="range" id="slider5" min="0" max="100" value="50">
+        <div class="value">Value: <span id="value5">50</span></div>
     </div>
 
     <div class="slider-block">
-      <label for="slider6">Cohesion and Separation</label>
-      <input type="range" id="slider6" min="0" max="100" value="50">
-      <div class="value">Value: <span id="value6">50</span></div>
+        <label for="slider6">Cohesion and Separation</label>
+        <input type="range" id="slider6" min="0" max="100" value="50">
+        <div class="value">Value: <span id="value6">50</span></div>
     </div>
-  </div>
+</div>
 
-  <script>
-    for (let i = 1; i <= 6; i++) {
-      const slider = document.getElementById(`slider${i}`);
-      const output = document.getElementById(`value${i}`);
-      slider.addEventListener('input', () => {
-        output.textContent = slider.value;
-      });
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<div id="chartContainer"></div>
+
+<script>
+    const data = {{ data|safe }};
+
+    // 判断维度
+    if (data[0].length == 2) {
+        // 生成 2D 图
+        Highcharts.chart('chartContainer', {
+            chart: {type: 'scatter'},
+            title: {text: '2D Regression Data'},
+            series: [{
+                name: 'Example Data',
+                marker: {radius: 2},
+                data: data
+            }]
+        });
+    } else if (data[0].length == 3) {
+        const minx = Math.min(...data.map(item => item[0]));
+        const miny = Math.min(...data.map(item => item[1]));
+        const minz = Math.min(...data.map(item => item[2]));
+
+        const maxx = Math.max(...data.map(item => item[0]));
+        const maxy = Math.max(...data.map(item => item[1]));
+        const maxz = Math.max(...data.map(item => item[2]));
+        console.log(minx, miny, minz, maxx, maxy, maxz);
+
+        // 设置 3D 效果颜色
+        Highcharts.setOptions({
+            colors: Highcharts.getOptions().colors.map(color => ({
+                radialGradient: {cx: 0.4, cy: 0.3, r: 0.5},
+                stops: [
+                    [0, color],
+                    [1, Highcharts.color(color).brighten(-0.2).get('rgb')]
+                ]
+            }))
+        });
+
+        // 生成 3D 图
+        const chart = new Highcharts.Chart('chartContainer', {
+            chart: {
+                margin: 100,
+                type: 'scatter3d',
+                animation: false,
+                options3d: {
+                    enabled: true,
+                    alpha: 10,
+                    beta: 20,
+                    depth: 250,
+                    viewDistance: 10,
+                    fitToPlot: false,
+                    frame: {
+                        bottom: {size: 1, color: 'rgba(0,0,0,0.02)'},
+                        back: {size: 1, color: 'rgba(0,0,0,0.04)'},
+                        side: {size: 1, color: 'rgba(0,0,0,0.06)'}
+                    }
+                }
+            },
+            title: {text: '3D Regression Data'},
+            subtitle: {text: 'Click and drag the plot area to rotate'},
+            plotOptions: {
+                scatter: {
+                    width: 10,
+                    height: 10,
+                    depth: 10
+                }
+            },
+            xAxis: {
+                min: minx,
+                max: maxx,
+                gridLineWidth: 1
+            },
+            yAxis: {
+                min: miny,
+                max: maxy,
+                title: null
+            },
+            zAxis: {
+                min: minz,
+                max: maxz,
+                showFirstLabel: false
+            },
+            legend: {enabled: false},
+            series: [{
+                name: 'Data',
+                colorByPoint: true,
+                data: data
+            }]
+        });
+
+        // 添加旋转交互
+        (function (H) {
+            function dragStart(eStart) {
+                eStart = chart.pointer.normalize(eStart);
+                const posX = eStart.chartX;
+                const posY = eStart.chartY;
+                const alpha = chart.options.chart.options3d.alpha;
+                const beta = chart.options.chart.options3d.beta;
+                const sensitivity = 5;
+                const handlers = [];
+
+                function drag(e) {
+                    e = chart.pointer.normalize(e);
+                    chart.update({
+                        chart: {
+                            options3d: {
+                                alpha: alpha + (e.chartY - posY) / sensitivity,
+                                beta: beta + (posX - e.chartX) / sensitivity
+                            }
+                        }
+                    }, undefined, undefined, false);
+                }
+
+                function unbindAll() {
+                    handlers.forEach(unbind => unbind && unbind());
+                    handlers.length = 0;
+                }
+
+                handlers.push(H.addEvent(document, 'mousemove', drag));
+                handlers.push(H.addEvent(document, 'touchmove', drag));
+                handlers.push(H.addEvent(document, 'mouseup', unbindAll));
+                handlers.push(H.addEvent(document, 'touchend', unbindAll));
+            }
+
+            H.addEvent(chart.container, 'mousedown', dragStart);
+            H.addEvent(chart.container, 'touchstart', dragStart);
+        })(Highcharts);
     }
-  </script>
+</script>
+
+<p> Percentage of outliers within the dataset is: {{ result }}% </p>
+
+<script>
+    for (let i = 1; i <= 6; i++) {
+        const slider = document.getElementById(`slider${i}`);
+        const output = document.getElementById(`value${i}`);
+        slider.addEventListener('input', () => {
+            output.textContent = slider.value;
+        });
+    }
+</script>
 
 </body>
 </html>

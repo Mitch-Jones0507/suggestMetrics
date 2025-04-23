@@ -3,67 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Top Bar Example</title>
+  <title>SuggestMetrics</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
-    <style>
-    * { box-sizing: border-box; }
-    body { font-family: sans-serif; }
-
-    .carousel {
-      width: 600px;
-      margin: 50px auto;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-    }
-
-    .carousel-track {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-    }
-
-    .carousel-item {
-      min-width: 100%;
-      display: flex;
-      align-items: center;
-      padding: 20px;
-      background-color: #f9f9f9;
-    }
-
-    .carousel-item img {
-      max-width: 40%;
-      height: auto;
-      margin-right: 20px;
-      border-radius: 8px;
-    }
-
-    .carousel-item .text {
-      flex: 1;
-    }
-
-    .carousel-button {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.5);
-      color: white;
-      border: none;
-      padding: 10px;
-      cursor: pointer;
-      font-size: 18px;
-    }
-
-    .carousel-button.prev {
-      left: 10px;
-    }
-
-    .carousel-button.next {
-      right: 10px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 
 <body class="bg-gray-100">
   <!-- Top Bar -->
@@ -78,9 +22,9 @@
 
           <!-- Navigation Links -->
           <nav class="hidden md:flex space-x-6 text-gray-700">
-              <a href="/suggestMetrics" class="hover:text-blue-600 transition">Home</a>
-              <a href="/suggestMetrics/about" class="hover:text-blue-600 transition">About</a>
-              <a href="/suggestMetrics/metricsExplained" class="hover:text-blue-600 transition">Metrics Explained</a>
+            <a href="/suggestMetrics" class="hover:text-blue-600 transition">Home</a>
+            <a href="/suggestMetrics/about" class="hover:text-blue-600 transition">About</a>
+            <a href="/suggestMetrics/metricsExplained" class="hover:text-blue-600 transition">Metrics Explained</a>
           </nav>
         </div>
 
@@ -94,48 +38,23 @@
     </div>
   </header>
 
-<div class="carousel">
-  <div class="carousel-track" id="carouselTrack">
-    <div class="carousel-item">
-      <img src="https://via.placeholder.com/200x150" alt="Image 1">
-      <div class="text">
-        <h3>Classification</h3>
-        <p>*CLASSIFICATION EXPLAINED*</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="https://via.placeholder.com/200x150" alt="Image 2">
-      <div class="text">
-        <h3>Clustering</h3>
-        <p>*CLUSTERING EXPLAINED*</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="https://via.placeholder.com/200x150" alt="Image 3">
-      <div class="text">
-        <h3>Regression</h3>
-        <p>*REGRESSION EXPLAINED*</p>
-      </div>
-    </div>
+<div class="team-section">
+  <div class="team-member">
+    <img src="https://via.placeholder.com/400x300" alt="">
+    <h3>Classification</h3>
+    <p>Classification Explained</p>
   </div>
-
-  <button class="carousel-button prev" onclick="moveSlide(-1)">❮</button>
-  <button class="carousel-button next" onclick="moveSlide(1)">❯</button>
+  <div class="team-member">
+    <img src="https://via.placeholder.com/400x300" alt="">
+    <h3>Clustering</h3>
+    <p>Clustering Explained</p>
+  </div>
+  <div class="team-member">
+    <img src="https://via.placeholder.com/400x300" alt="">
+    <h3>Regression</h3>
+    <p>Regression Explained</p>
+  </div>
 </div>
 
-<script>
-  const track = document.getElementById('carouselTrack');
-  const slides = document.querySelectorAll('.carousel-item');
-  let currentIndex = 0;
-
-  function moveSlide(direction) {
-    currentIndex += direction;
-    if (currentIndex < 0) currentIndex = slides.length - 1;
-    if (currentIndex >= slides.length) currentIndex = 0;
-
-    const offset = -currentIndex * 600; // width of .carousel
-    track.style.transform = `translateX(${offset}px)`;
-  }
-</script>
 </body>
 </html>
