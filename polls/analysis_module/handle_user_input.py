@@ -18,8 +18,8 @@ def analysis_module(query, file):
     elif option == 'classification':
         target = query.get("target")
         positive_class = query.get("positiveClass")
-        is_cost_sensitive = query.get("isCostSensitive")
-        is_specific = query.get("isSpecific")
+        is_cost_sensitive = query.get("isCostSensitive") == "true"
+        is_specific = query.get("isSpecific") == "true"
         result = classification_analysis(df, target, positive_class, is_cost_sensitive, is_specific)
         data = df[target].values.tolist()
         return data, result
@@ -33,14 +33,15 @@ def analysis_module(query, file):
 def classification_analysis(df, target, positive_class, is_cost_sensitive, is_specific):
     result = {}
 
-    print(positive_class)
-    print(is_cost_sensitive)
-    print(is_specific)
     class_counter = df[target].value_counts().to_dict()
     if len(class_counter) == 2:
-        max_key = max(class_counter.values())
-        min_key = min(class_counter.values())
-        result['imbalance_ratio'] = max_key / min_key
+        max_num = max(class_counter.values())
+        min_num = min(class_counter.values())
+        imbalance_ratio = max_num / min_num
+        if imbalance_ratio > 3.0 and class_counter[positive_class] == min_num:
+            result['imbalance_ratio'] = (imbalance_ratio, 'macF1')
+        else:
+            result['imbalance_ratio'] = (imbalance_ratio, 'accuracy')
     else:
         empirical_distribution = list(class_counter.values())
         mean = sum(empirical_distribution) / len(empirical_distribution)
@@ -53,12 +54,28 @@ def classification_analysis(df, target, positive_class, is_cost_sensitive, is_sp
             max_diff_vals = [x for x in minority_classes if x == max_diff_val]
         numerator = sqrt(sum((x - y) ** 2 for x, y in zip(empirical_distribution, balanced_distribution)))
         denominator = sqrt(sum((x - y) ** 2 for x, y in zip(max_diff_vals, [mean] * len(max_diff_vals))))
-        result['imbalance_degree'] = numerator / denominator + (num_minority_classes - 1) \
-            if num_minority_classes else -1
-        result["positive_class"] = positive_class
-        result["is_cost_sensitive"] = is_cost_sensitive
-        result["is_specific"] = is_specific
-        return result
+        imbalance_degree = numerator / denominator + (num_minority_classes - 1) if num_minority_classes else -1
+        if imbalance_degree <= 1.0:
+            result['imbalance_degree'] = (imbalance_degree, 'accuracy')
+        else:
+            result['imbalance_degree'] = (imbalance_degree, 'macF1')
+
+        if num_minority_classes >= 3:
+            result['num_minority_classes'] = (num_minority_classes, 'macF1')
+        else:
+            result['num_minority_classes'] = (num_minority_classes, 'accuracy')
+
+    if is_cost_sensitive:
+        result["is_cost_sensitive"] = (is_cost_sensitive, 'macF1')
+    else:
+        result["is_cost_sensitive"] = (is_cost_sensitive, 'accuracy')
+
+    if is_specific:
+        result["is_specific"] = (is_specific, 'macF1')
+    else:
+        result["is_specific"] = (is_specific, 'accuracy')
+
+    return result
 
 
 def regression_analysis(df, features, target):
