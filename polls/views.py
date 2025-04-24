@@ -10,11 +10,8 @@ def home(request):
     query = request.POST
     task = query.get("task")
     file = request.FILES.get("user_data")
-    features = query.getlist("features")
-    target = query.get("target")
     if task:
-        data, result = analysis_module(task, file, features, target)
-        print(data)
+        data, result = analysis_module(query,file)
         return render(request, f"{task}.html", {"result": result, "data": data})
     return render(request, "home.html")
 
