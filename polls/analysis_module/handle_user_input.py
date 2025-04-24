@@ -6,9 +6,6 @@ import statsmodels.api as sm
 def analysis_module(option, file, features, target):
     df = pd.read_csv(file)
     result = {}
-    # if len(features) > 0:
-    #     data_input = features + [target]
-    # data_input = target
     if option == 'regression':
         x = sm.add_constant(df[features])
         y = df[target]
@@ -20,7 +17,6 @@ def analysis_module(option, file, features, target):
         print("Influential points (potential outliers):", influential_points)
         percentage = len(influential_points) / len(df) * 100
         print("Percentage of influential points:", percentage)
-        # TODO: Which feature should be returned?
         data_input = features + [target]
         data = df[data_input].values.tolist()
         return data, percentage
@@ -34,7 +30,6 @@ def analysis_module(option, file, features, target):
             print(result['imbalance_ratio'])
         else:
             # TODO: imbalance degree
-            print('multiclass classification')
             empirical_distribution = list(class_counter.values())
             mean = sum(empirical_distribution) / len(empirical_distribution)
             balanced_distribution = [mean] * len(empirical_distribution)
@@ -52,4 +47,5 @@ def analysis_module(option, file, features, target):
         return data, result
     elif option == 'clustering':
         data = df[features].values.tolist()
+        # TODO: clustering analysis
         return data, None
