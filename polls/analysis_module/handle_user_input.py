@@ -39,9 +39,9 @@ def classification_analysis(df, target, positive_class, is_cost_sensitive, is_sp
         min_num = min(class_counter.values())
         imbalance_ratio = max_num / min_num
         if imbalance_ratio > 3.0 and class_counter[positive_class] == min_num:
-            result['imbalance_ratio'] = (imbalance_ratio, 'macF1')
+            result['imbalance_ratio'] = (imbalance_ratio, 'MacroF1')
         else:
-            result['imbalance_ratio'] = (imbalance_ratio, 'accuracy')
+            result['imbalance_ratio'] = (imbalance_ratio, 'Accuracy')
     else:
         empirical_distribution = list(class_counter.values())
         mean = sum(empirical_distribution) / len(empirical_distribution)
@@ -56,24 +56,24 @@ def classification_analysis(df, target, positive_class, is_cost_sensitive, is_sp
         denominator = sqrt(sum((x - y) ** 2 for x, y in zip(max_diff_vals, [mean] * len(max_diff_vals))))
         imbalance_degree = numerator / denominator + (num_minority_classes - 1) if num_minority_classes else -1
         if imbalance_degree <= 1.0:
-            result['imbalance_degree'] = (imbalance_degree, 'accuracy')
+            result['imbalance_degree'] = (imbalance_degree, 'Accuracy')
         else:
-            result['imbalance_degree'] = (imbalance_degree, 'macF1')
+            result['imbalance_degree'] = (imbalance_degree, 'MacroF1')
 
         if num_minority_classes >= 3:
-            result['num_minority_classes'] = (num_minority_classes, 'macF1')
+            result['num_minority_classes'] = (num_minority_classes, 'MacroF1')
         else:
-            result['num_minority_classes'] = (num_minority_classes, 'accuracy')
+            result['num_minority_classes'] = (num_minority_classes, 'Accuracy')
 
     if is_cost_sensitive:
-        result["is_cost_sensitive"] = (is_cost_sensitive, 'macF1')
+        result["is_cost_sensitive"] = (is_cost_sensitive, 'MacroF1')
     else:
-        result["is_cost_sensitive"] = (is_cost_sensitive, 'accuracy')
+        result["is_cost_sensitive"] = (is_cost_sensitive, 'Accuracy')
 
     if is_specific:
-        result["is_specific"] = (is_specific, 'macF1')
+        result["is_specific"] = (is_specific, 'MacroF1')
     else:
-        result["is_specific"] = (is_specific, 'accuracy')
+        result["is_specific"] = (is_specific, 'Accuracy')
 
     return result
 
