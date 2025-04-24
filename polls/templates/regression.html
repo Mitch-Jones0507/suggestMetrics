@@ -145,7 +145,6 @@
 <script>
     const data = {{ data|safe }};
 
-    // 判断维度
     if (data[0].length == 2) {
         // 生成 2D 图
         Highcharts.chart('chartContainer', {
@@ -167,7 +166,6 @@
         const maxz = Math.max(...data.map(item => item[2]));
         console.log(minx, miny, minz, maxx, maxy, maxz);
 
-        // 设置 3D 效果颜色
         Highcharts.setOptions({
             colors: Highcharts.getOptions().colors.map(color => ({
                 radialGradient: {cx: 0.4, cy: 0.3, r: 0.5},
@@ -178,7 +176,6 @@
             }))
         });
 
-        // 生成 3D 图
         const chart = new Highcharts.Chart('chartContainer', {
             chart: {
                 margin: 100,
@@ -230,7 +227,6 @@
             }]
         });
 
-        // 添加旋转交互
         (function (H) {
             function dragStart(eStart) {
                 eStart = chart.pointer.normalize(eStart);
