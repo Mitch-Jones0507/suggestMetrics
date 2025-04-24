@@ -56,6 +56,8 @@
     <button type="submit">Upload</button>
 </form>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
 <script>
     document.getElementById("base_form").addEventListener('change', (event) => {
         const eventType = event.target.id
@@ -68,29 +70,39 @@
 
         const task = document.getElementById('task').value;
 
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            const text = e.target.result;
-            const lines = text.split(/\r\n|\n/);
-            const headerLine = lines[0].replace(/^\uFEFF/, '');
-            const headers = headerLine.split(',');
+        Papa.parse(file, {
+            header: true,
+            skipEmptyLines: true,
+            complete: function (results) {
+                const data = results.data;
+                const headers = results.meta.fields;
 
-            columnSelector.innerHTML = '';
-            if (task === 'regression') {
-                generateCheckboxes(headers, columnSelector, 'Choose the feature columns:');
-                generateDropdown(headers, columnSelector, 'Choose the column to predict:');
-            } else if (task === 'classification') {
-                generateDropdown(headers, columnSelector, 'Choose the column of classes:');
-            } else if (task === 'clustering') {
-                generateCheckboxes(headers, columnSelector, 'Choose the feature columns:');
+                columnSelector.innerHTML = '';
+                if (task === 'regression') {
+                    generateCheckboxes(headers, columnSelector, 'Choose the feature columns:');
+                    generateDropdown(headers, 'target', columnSelector, 'Choose the column to predict:');
+                } else if (task === 'classification') {
+                    generateDropdown(headers, 'target', columnSelector, 'Choose the column of classes:');
+
+                    document.getElementById('target').addEventListener('change', function (e) {
+                        const selectedColumn = e.target.value;
+                        const values = data.map(row => row[selectedColumn]);
+                        const uniqueValues = [...new Set(values)];
+                        generateDropdown(uniqueValues, 'positiveClass', columnSelector, 'Choose the positive class:');
+                    });
+
+                    generateQuestion("isCostSensitive", columnSelector, "Is misclassification costly or otherwise problematic?");
+                    generateQuestion("isSpecific", columnSelector, "Are you concerned about the performance of specific classes?");
+                } else if (task === 'clustering') {
+                    generateCheckboxes(headers, columnSelector, 'Choose the feature columns:');
+                }
             }
-        };
+        });
 
         columnSelector.style.display = 'block';
-        reader.readAsText(file);
     });
 
-    function generateCheckboxes(headers, container, text) {
+    function generateCheckboxes(items, container, text) {
         const label = document.createElement('label');
         label.htmlFor = 'features';
         label.textContent = text;
@@ -100,7 +112,7 @@
         featureGroup.id = 'features';
         featureGroup.name = 'features';
 
-        headers.forEach((header, index) => {
+        items.forEach((header, index) => {
             const cleanHeader = header.trim();
 
             const checkbox = document.createElement('input');
@@ -121,24 +133,67 @@
         container.appendChild(featureGroup);
     }
 
-    function generateDropdown(headers, container, text) {
+    function generateDropdown(items, id, container, text) {
+        const oldSelect = document.getElementById(id);
+        if (oldSelect) {
+            container.removeChild(oldSelect.parentElement);
+        }
+
+        const wrapper = document.createElement('div');
+
         const label = document.createElement('label');
-        label.htmlFor = 'target';
+        label.htmlFor = id;
         label.textContent = text;
-        container.appendChild(label);
+        wrapper.appendChild(label);
 
         const select = document.createElement('select');
-        select.name = 'target';
-        select.id = 'target';
+        select.name = id;
+        select.id = id;
         select.required = true;
-
-        headers.forEach(header => {
-            const cleanHeader = header.trim();
-            const option = new Option(cleanHeader, cleanHeader);
+        items.forEach(item => {
+            const option = new Option(item, item);
             select.add(option);
         });
+        wrapper.appendChild(select);
 
-        container.appendChild(select);
+        container.appendChild(wrapper);
+    }
+
+    function generateQuestion(id, container, text) {
+        const wrapper = document.createElement('div');
+
+        const groupLabel = document.createElement('label');
+        groupLabel.textContent = text;
+        wrapper.appendChild(groupLabel);
+
+        const yesId = `${id}_yes`;
+        const yesRadio = document.createElement('input');
+        yesRadio.type = 'radio';
+        yesRadio.name = id;
+        yesRadio.value = 'true';
+        yesRadio.id = yesId;
+
+        const yesLabel = document.createElement('label');
+        yesLabel.htmlFor = yesId;
+        yesLabel.appendChild(yesRadio);
+        yesLabel.appendChild(document.createTextNode(' Yes'));
+
+        const noId = `${id}_no`;
+        const noRadio = document.createElement('input');
+        noRadio.type = 'radio';
+        noRadio.name = id;
+        noRadio.value = 'false';
+        noRadio.id = noId;
+
+        const noLabel = document.createElement('label');
+        noLabel.htmlFor = noId;
+        noLabel.appendChild(noRadio);
+        noLabel.appendChild(document.createTextNode(' No'));
+
+        wrapper.appendChild(yesLabel);
+        wrapper.appendChild(noLabel);
+
+        container.appendChild(wrapper);
     }
 </script>
 </body>
