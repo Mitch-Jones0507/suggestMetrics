@@ -124,7 +124,7 @@
     {% endfor %}
 
     function generate_suggestion() {
-        let suggestion = "";
+        let suggestion = "Suggestion:<br>";
         {% if result.imbalance_ratio %}
             suggestion += "Imbalance Ratio is {{ result.imbalance_ratio.0 }}, so {{ result.imbalance_ratio.1 }} is suggested.<br>";
         {% else %}
@@ -145,11 +145,11 @@
         {% endfor %}
 
         if (acc_score > f1_score) {
-            suggestion += "Accuracy metric perform better for this dataset.<br>";
+            suggestion += "To sum up, Accuracy metric perform better for this dataset.<br>";
         } else if (acc_score < f1_score) {
-            suggestion += "MacroF1 metric perform better for this dataset.<br>";
+            suggestion += "To sum up, MacroF1 metric perform better for this dataset.<br>";
         } else {
-            suggestion += "Both Accuracy and MacroF1 metrics perform well for this dataset.<br>";
+            suggestion += "To sum up, both Accuracy and MacroF1 metrics perform well for this dataset.<br>";
         }
 
         document.getElementById("suggestion").innerHTML = suggestion;

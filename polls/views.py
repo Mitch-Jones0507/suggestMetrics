@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-import numpy as np
+from django.shortcuts import render
+
 from polls.analysis_module.handle_user_input import analysis_module
 
 
