@@ -37,8 +37,7 @@
 <body class="bg-gray-100">
 <form method="POST" enctype="multipart/form-data"
       class="flex flex-col gap-4 w-[600px] justify-start bg-gray-300 rounded-xl"
-      id="base_form"
->
+      id="base_form">
     {% csrf_token %}
     <fieldset>
         <label for="task">Choose a task:</label>
@@ -79,8 +78,20 @@
 
                 columnSelector.innerHTML = '';
                 if (task === 'regression') {
-                    generateCheckboxes(headers, columnSelector, 'Choose the feature columns:');
-                    generateDropdown(headers, 'target', columnSelector, 'Choose the column to predict:');
+                    generateCheckboxes(headers, columnSelector, 'Choose the predictor variables:');
+                    generateDropdown(headers, 'target', columnSelector, 'Choose the target variable:');
+                    generateQuestion("isPolynomial", columnSelector, "Will you fit a polynomial function to capture curvature in the data?");
+
+                    document.getElementById('isPolynomial_yes').addEventListener('change', () => {
+                        options = ['2', '3', 'more than 3']
+                        generateDropdown(options, 'degreeOfPolynomial', columnSelector, 'What is the highest degree polynomial term to be used in your model?');
+                    });
+                    document.getElementById('isPolynomial_no').addEventListener('change', () => {
+                        const oldSelect = document.getElementById('degreeOfPolynomial');
+                        if (oldSelect) {
+                            columnSelector.removeChild(oldSelect.parentElement);
+                        }
+                    });
                 } else if (task === 'classification') {
                     generateDropdown(headers, 'target', columnSelector, 'Choose the column of classes:');
 

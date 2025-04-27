@@ -1,3 +1,4 @@
+{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -97,42 +98,18 @@
 </header>
 
 <div class="slider-group">
-    <div class="slider-block">
-        <label for="slider1">Ground Truth Labels</label>
-        <input type="range" id="slider1" min="0" max="100" value="50">
-        <div class="value">Value: <span id="value1">50</span></div>
-    </div>
-
-    <div class="slider-block">
-        <label for="slider2">Similarities to Known Clusters</label>
-        <input type="range" id="slider2" min="0" max="100" value="50">
-        <div class="value">Value: <span id="value2">50</span></div>
-    </div>
-
-    <div class="slider-block">
-        <label for="slider3">Percentage Outliers</label>
-        <input type="range" id="slider3" min="0" max="100" value="50">
-        <div class="value">Value: <span id="value3">50</span></div>
-    </div>
-
-    <div class="slider-block">
-        <label for="slider4">Percentage Split Between Clusters</label>
-        <input type="range" id="slider4" min="0" max="100" value="50">
-        <div class="value">Value: <span id="value4">50</span></div>
-    </div>
-
-    <div class="slider-block">
-        <label for="slider5">Cluster Convexity</label>
-        <input type="range" id="slider5" min="0" max="100" value="50">
-        <div class="value">Value: <span id="value5">50</span></div>
-    </div>
-
-    <div class="slider-block">
-        <label for="slider6">Cohesion and Separation</label>
-        <input type="range" id="slider6" min="0" max="100" value="50">
-        <div class="value">Value: <span id="value6">50</span></div>
-    </div>
+    {% for key,_ in result.items %}
+        <div class="slider-block">
+            <label for="slider{{ forloop.counter }}">{{ key|underscore_to_title }}</label>
+            <input type="range" id="slider{{ forloop.counter }}" min=0 max=100 value=50>
+            <div class="value">Weighting: <span id="value{{ forloop.counter }}">50</span></div>
+        </div>
+    {% endfor %}
 </div>
+<div id="suggestion"></div>
+<div id="chartContainer"></div>
+
+</body>
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/highcharts-3d.js"></script>
@@ -140,9 +117,53 @@
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
-<div id="chartContainer"></div>
 
 <script>
+    generate_suggestion()
+
+    {% for _ in result.items %}
+        const slider{{ forloop.counter }} = document.getElementById(`slider{{ forloop.counter }}`);
+        const output{{ forloop.counter }} = document.getElementById(`value{{ forloop.counter }}`);
+        slider{{ forloop.counter }}.addEventListener('input', () => {
+            output{{ forloop.counter }}.textContent = slider{{ forloop.counter }}.value;
+        });
+        slider{{ forloop.counter }}.addEventListener('change', generate_suggestion);
+    {% endfor %}
+
+    function generate_suggestion() {
+        let suggestion = "Suggestion:<br>";
+        suggestion += "Percentage of outliers within the dataset is: {{ result.outlier_rate.0 }}%, so {{ result.outlier_rate.1 }} is suggested.<br>";
+        {% if result.coefficient_of_variation %}
+            suggestion += "Coefficient of Variation is {{ result.coefficient_of_variation.0 }}, so {{ result.coefficient_of_variation.1 }} is suggested.<br>";
+        {% else %}
+            suggestion += "Condition Number is {{ result.condition_number.0 }}, so {{ result.condition_number.1 }} is suggested.<br>";
+            suggestion += "Subjects per Predictor is {{ result.subjects_per_predictor.0 }}, so {{ result.subjects_per_predictor.1 }} is suggested.<br>";
+        {% endif %}
+        {% if result.degree_of_polynomial %}
+            suggestion += "The degree of Polynomial is {{ result.degree_of_polynomial.0 }}, so {{ result.degree_of_polynomial.1 }} is suggested.<br>";
+        {% endif %}
+
+        let r_square_score = 0;
+        let mae_score = 0;
+        {% for _, value in result.items %}
+            if ('{{ value.1 }}' === 'R Square') {
+                r_square_score += parseInt(document.getElementById("slider{{ forloop.counter }}").value);
+            } else if ('{{ value.1 }}' === 'MAE') {
+                mae_score += parseInt(document.getElementById("slider{{ forloop.counter }}").value);
+            }
+        {% endfor %}
+
+        if (r_square_score > mae_score) {
+            suggestion += "To sum up, R square metric perform better for this dataset.<br>";
+        } else if (r_square_score < mae_score) {
+            suggestion += "To sum up, MAE metric perform better for this dataset.<br>";
+        } else {
+            suggestion += "To sum up, both R square and MAE metrics perform well for this dataset.<br>";
+        }
+
+        document.getElementById("suggestion").innerHTML = suggestion;
+    }
+
     const data = {{ data|safe }};
 
     if (data[0].length == 2) {
@@ -266,7 +287,4 @@
     }
 </script>
 
-<p> Percentage of outliers within the dataset is: {{ result }}% </p>
-
-</body>
 </html>

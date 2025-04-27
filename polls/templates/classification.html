@@ -139,7 +139,7 @@
         {% for _, value in result.items %}
             if ('{{ value.1 }}' === 'Accuracy') {
                 acc_score += parseInt(document.getElementById("slider{{ forloop.counter }}").value);
-            } else if ('{{ value.1 }}' === 'MacroF1') {
+            } else if ('{{ value.1 }}' === 'Macro F1') {
                 f1_score += parseInt(document.getElementById("slider{{ forloop.counter }}").value);
             }
         {% endfor %}
@@ -147,9 +147,9 @@
         if (acc_score > f1_score) {
             suggestion += "To sum up, Accuracy metric perform better for this dataset.<br>";
         } else if (acc_score < f1_score) {
-            suggestion += "To sum up, MacroF1 metric perform better for this dataset.<br>";
+            suggestion += "To sum up, Macro F1 metric perform better for this dataset.<br>";
         } else {
-            suggestion += "To sum up, both Accuracy and MacroF1 metrics perform well for this dataset.<br>";
+            suggestion += "To sum up, both Accuracy and Macro F1 metrics perform well for this dataset.<br>";
         }
 
         document.getElementById("suggestion").innerHTML = suggestion;
