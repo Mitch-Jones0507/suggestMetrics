@@ -35,25 +35,37 @@
     </div>
 </header>
 <body class="bg-gray-100">
-<form method="POST" enctype="multipart/form-data"
-      class="flex flex-col gap-4 w-[600px] justify-start bg-gray-300 rounded-xl"
-      id="base_form">
-    {% csrf_token %}
-    <fieldset>
-        <label for="task">Choose a task:</label>
-        <select id="task" name="task" required>
-            <option value="classification">Classification</option>
-            <option value="regression">Model Relation</option>
-{#            <option value="clustering">Clustering</option>#}
-        </select>
-    </fieldset>
-    <fieldset>
-        <label for="user_data">Choose a csv file:</label>
-        <input type="file" accept="text/csv" id="userData" name="user_data" required/>
-    </fieldset>
-    <div id="columnSelector" style="display: none;"></div>
-    <button type="submit">Upload</button>
-</form>
+<div class="min-h-[calc(100vh-4rem)] flex items-center justify-center">
+    <form method="POST" enctype="multipart/form-data"
+          class="flex flex-col gap-6 w-[640px] justify-start bg-white rounded-2xl p-10 shadow-2xl"
+          id="base_form">
+        {% csrf_token %}
+        <fieldset>
+            <label for="task">Choose a task:</label>
+            <select id="task" name="task"
+                    class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none w-60"
+                    required>
+                <option value="classification">Classification</option>
+                <option value="regression">Model Relation</option>
+                {#            <option value="clustering">Clustering</option>#}
+            </select>
+        </fieldset>
+        <fieldset>
+            <label for="userData"
+                   class="inline-block bg-blue-600 text-white text-lg py-2 px-6 rounded-xl shadow-md cursor-pointer hover:bg-blue-700 transform hover:scale-105 transition-all duration-300 ease-in-out">
+                Upload CSV
+            </label>
+            <input type="file" id="userData" name="user_data" accept="text/csv" required class="hidden"/>
+        </fieldset>
+        <div id="columnSelector" style="display: none;"></div>
+        <button type="submit"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition">
+            Upload
+        </button>
+    </form>
+</div>
+
+</body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
@@ -117,28 +129,35 @@
         const label = document.createElement('label');
         label.htmlFor = 'features';
         label.textContent = text;
+        label.className = "block text-gray-700 font-medium mb-2";
         container.appendChild(label);
 
         const featureGroup = document.createElement('div');
         featureGroup.id = 'features';
         featureGroup.name = 'features';
+        featureGroup.className = "flex flex-wrap gap-4";
 
         items.forEach((header, index) => {
             const cleanHeader = header.trim();
+
+            const wrapper = document.createElement('div');
+            wrapper.className = "flex items-center gap-2";
 
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.name = 'features';
             checkbox.value = cleanHeader;
             checkbox.id = `features_${index}`;
+            checkbox.className = "h-4 w-4 text-blue-600 border-gray-300 rounded";
 
             const label = document.createElement('label');
             label.htmlFor = `features_${index}`;
-            label.style.marginRight = '12px';
-            label.appendChild(checkbox);
-            label.appendChild(document.createTextNode(` ${cleanHeader}`));
+            label.className = "text-gray-700";
+            label.appendChild(document.createTextNode(cleanHeader));
 
-            featureGroup.appendChild(label);
+            wrapper.appendChild(checkbox);
+            wrapper.appendChild(label);
+            featureGroup.appendChild(wrapper);
         });
 
         container.appendChild(featureGroup);
@@ -151,16 +170,19 @@
         }
 
         const wrapper = document.createElement('div');
+        wrapper.className = "flex flex-col gap-2";
 
         const label = document.createElement('label');
         label.htmlFor = id;
         label.textContent = text;
+        label.className = "text-gray-700 font-medium";
         wrapper.appendChild(label);
 
         const select = document.createElement('select');
         select.name = id;
         select.id = id;
         select.required = true;
+        select.className = "border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none w-60";
         items.forEach(item => {
             const option = new Option(item, item);
             select.add(option);
@@ -172,10 +194,15 @@
 
     function generateQuestion(id, container, text) {
         const wrapper = document.createElement('div');
+        wrapper.className = "flex flex-col gap-2";
 
         const groupLabel = document.createElement('label');
         groupLabel.textContent = text;
+        groupLabel.className = "text-gray-700 font-medium";
         wrapper.appendChild(groupLabel);
+
+        const optionsWrapper = document.createElement('div');
+        optionsWrapper.className = "flex gap-6 items-center";
 
         const yesId = `${id}_yes`;
         const yesRadio = document.createElement('input');
@@ -183,11 +210,13 @@
         yesRadio.name = id;
         yesRadio.value = 'true';
         yesRadio.id = yesId;
+        yesRadio.className = "h-4 w-4 text-blue-600 border-gray-300";
 
         const yesLabel = document.createElement('label');
         yesLabel.htmlFor = yesId;
+        yesLabel.className = "flex items-center gap-2 text-gray-700";
         yesLabel.appendChild(yesRadio);
-        yesLabel.appendChild(document.createTextNode(' Yes'));
+        yesLabel.appendChild(document.createTextNode('Yes'));
 
         const noId = `${id}_no`;
         const noRadio = document.createElement('input');
@@ -195,17 +224,19 @@
         noRadio.name = id;
         noRadio.value = 'false';
         noRadio.id = noId;
+        noRadio.className = "h-4 w-4 text-blue-600 border-gray-300";
 
         const noLabel = document.createElement('label');
         noLabel.htmlFor = noId;
+        noLabel.className = "flex items-center gap-2 text-gray-700";
         noLabel.appendChild(noRadio);
-        noLabel.appendChild(document.createTextNode(' No'));
+        noLabel.appendChild(document.createTextNode('No'));
 
-        wrapper.appendChild(yesLabel);
-        wrapper.appendChild(noLabel);
+        optionsWrapper.appendChild(yesLabel);
+        optionsWrapper.appendChild(noLabel);
+        wrapper.appendChild(optionsWrapper);
 
         container.appendChild(wrapper);
     }
 </script>
-</body>
 </html>
