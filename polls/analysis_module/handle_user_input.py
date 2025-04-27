@@ -11,10 +11,12 @@ def analysis_module(query, file):
     if option == 'regression':
         features = query.getlist("features")
         target = query.get("target")
-        percentage = regression_analysis(df, features, target)
+        is_polynomial = query.get("isPolynomial") == "true"
+        degree_of_polynomial = query.get("degreeOfPolynomial")
+        result = regression_analysis(df, features, target, is_polynomial, degree_of_polynomial)
         data_input = features + [target]
         data = df[data_input].values.tolist()
-        return data, percentage
+        return data, result
     elif option == 'classification':
         target = query.get("target")
         positive_class = query.get("positiveClass")
@@ -39,7 +41,7 @@ def classification_analysis(df, target, positive_class, is_cost_sensitive, is_sp
         min_num = min(class_counter.values())
         imbalance_ratio = max_num / min_num
         if imbalance_ratio > 3.0 and class_counter[positive_class] == min_num:
-            result['imbalance_ratio'] = (imbalance_ratio, 'MacroF1')
+            result['imbalance_ratio'] = (imbalance_ratio, 'Macro F1')
         else:
             result['imbalance_ratio'] = (imbalance_ratio, 'Accuracy')
     else:
@@ -58,27 +60,29 @@ def classification_analysis(df, target, positive_class, is_cost_sensitive, is_sp
         if imbalance_degree <= 1.0:
             result['imbalance_degree'] = (imbalance_degree, 'Accuracy')
         else:
-            result['imbalance_degree'] = (imbalance_degree, 'MacroF1')
+            result['imbalance_degree'] = (imbalance_degree, 'Macro F1')
 
         if num_minority_classes >= 3:
-            result['num_minority_classes'] = (num_minority_classes, 'MacroF1')
+            result['num_minority_classes'] = (num_minority_classes, 'Macro F1')
         else:
             result['num_minority_classes'] = (num_minority_classes, 'Accuracy')
 
     if is_cost_sensitive:
-        result["is_cost_sensitive"] = (is_cost_sensitive, 'MacroF1')
+        result["is_cost_sensitive"] = (is_cost_sensitive, 'Macro F1')
     else:
         result["is_cost_sensitive"] = (is_cost_sensitive, 'Accuracy')
 
     if is_specific:
-        result["is_specific"] = (is_specific, 'MacroF1')
+        result["is_specific"] = (is_specific, 'Macro F1')
     else:
         result["is_specific"] = (is_specific, 'Accuracy')
 
     return result
 
 
-def regression_analysis(df, features, target):
+def regression_analysis(df, features, target, is_polynomial, degree_of_polynomial):
+    result = {}
+
     x = sm.add_constant(df[features])
     y = df[target]
     model = sm.OLS(y, x).fit()
@@ -86,5 +90,36 @@ def regression_analysis(df, features, target):
     cooks_d, _ = influence.cooks_distance
     threshold = 4 / len(df)
     influential_points = np.where(cooks_d > threshold)[0]
-    percentage = len(influential_points) / len(df) * 100
-    return percentage
+    outlier_rate = len(influential_points) / len(df)
+    if outlier_rate < 0.05:
+        result["outlier_rate"] = (outlier_rate * 100, 'R Square')
+    else:
+        result["outlier_rate"] = (outlier_rate * 100, 'MAE')
+
+    if len(features) < 2:
+        mean = np.mean(df[target])
+        std = np.std(df[target], ddof=0)
+        coefficient_of_variation = std / mean
+        if coefficient_of_variation > 0.1:
+            result["coefficient_of_variation"] = (coefficient_of_variation, 'R Square')
+        else:
+            result["coefficient_of_variation"] = (coefficient_of_variation, 'MAE')
+    else:
+        condition_number = np.linalg.cond(df[features].to_numpy())
+        if condition_number < 30:
+            result["condition_number"] = (condition_number, 'R Square')
+        else:
+            result["condition_number"] = (condition_number, 'MAE')
+
+        subjects_per_predictor = len(df) / len(features)
+        if subjects_per_predictor > 10:
+            result["subjects_per_predictor"] = (subjects_per_predictor, 'R Square')
+        else:
+            result["subjects_per_predictor"] = (subjects_per_predictor, 'MAE')
+
+    if is_polynomial:
+        if degree_of_polynomial == 'more than 3':
+            result["degree_of_polynomial"] = (degree_of_polynomial, 'MAE')
+        else:
+            result["degree_of_polynomial"] = (degree_of_polynomial, 'R Square')
+    return result
