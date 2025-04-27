@@ -167,10 +167,9 @@
     const data = {{ data|safe }};
 
     if (data[0].length == 2) {
-        // 生成 2D 图
         Highcharts.chart('chartContainer', {
             chart: {type: 'scatter'},
-            title: {text: '2D Regression Data'},
+            title: {text: '2D Model Relation Data'},
             series: [{
                 name: 'Example Data',
                 marker: {radius: 2},
@@ -216,7 +215,7 @@
                     }
                 }
             },
-            title: {text: '3D Regression Data'},
+            title: {text: '3D Model Relation Data'},
             subtitle: {text: 'Click and drag the plot area to rotate'},
             plotOptions: {
                 scatter: {

@@ -43,8 +43,8 @@
         <label for="task">Choose a task:</label>
         <select id="task" name="task" required>
             <option value="classification">Classification</option>
-            <option value="regression">Regression</option>
-            <option value="clustering">Clustering</option>
+            <option value="regression">Model Relation</option>
+{#            <option value="clustering">Clustering</option>#}
         </select>
     </fieldset>
     <fieldset>
@@ -78,13 +78,13 @@
 
                 columnSelector.innerHTML = '';
                 if (task === 'regression') {
-                    generateCheckboxes(headers, columnSelector, 'Choose the predictor variables:');
-                    generateDropdown(headers, 'target', columnSelector, 'Choose the target variable:');
-                    generateQuestion("isPolynomial", columnSelector, "Will you fit a polynomial function to capture curvature in the data?");
+                    generateDropdown(headers, 'target', columnSelector, 'What are you trying to predict? (target variable)');
+                    generateCheckboxes(headers, columnSelector, 'What variables are you using to predict your target?');
+                    generateQuestion("isPolynomial", columnSelector, "Do you expect your data to be curved or shaped in a non-linear way? Would you like to model polynomial fit?");
 
                     document.getElementById('isPolynomial_yes').addEventListener('change', () => {
                         options = ['2', '3', 'more than 3']
-                        generateDropdown(options, 'degreeOfPolynomial', columnSelector, 'What is the highest degree polynomial term to be used in your model?');
+                        generateDropdown(options, 'degreeOfPolynomial', columnSelector, 'What do you expect to be your highest degree polynomial term in your model?');
                     });
                     document.getElementById('isPolynomial_no').addEventListener('change', () => {
                         const oldSelect = document.getElementById('degreeOfPolynomial');
