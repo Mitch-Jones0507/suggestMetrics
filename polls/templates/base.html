@@ -56,6 +56,7 @@
                 Upload CSV
             </label>
             <input type="file" id="userData" name="user_data" accept="text/csv" required class="hidden"/>
+            <div id="fileName" class="mt-2 text-gray-600 text-sm">No file selected</div>
         </fieldset>
         <div id="columnSelector" style="display: none;"></div>
         <button type="submit"
@@ -80,6 +81,8 @@
         if (!file) return;
 
         const task = document.getElementById('task').value;
+
+        document.getElementById('fileName').textContent = `Selected file: ${file.name}`;
 
         Papa.parse(file, {
             header: true,
