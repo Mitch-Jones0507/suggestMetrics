@@ -8,6 +8,7 @@ django = "*"
 numpy = "*"
 pandas = "*"
 statsmodels = "*"
+gunicorn = "*"
 
 [dev-packages]
 
