@@ -9,5 +9,7 @@ urlpatterns = [
     path("/regression", views.regression, name="regression"),
     path("/classification", views.classification, name="classification"),
     path("/about", views.about, name="about"),
-    path("/metricsExplained", views.metricsExplained, name="metricsExplained")
+    path("/metricsExplained", views.metricsExplained, name="metricsExplained"),
+    path("/regressionExplained", views.regressionExplained, name="regressionExplained"),
+    path("/classificationExplained", views.classificationExplained, name="classificationExplained"),
 ]

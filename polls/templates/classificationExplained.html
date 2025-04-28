@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SuggestMetrics</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .tooltip {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .tooltip .tooltip-text {
+      visibility: hidden;
+      width: 400px;
+      background-color: white;
+      border: 2px solid black;
+      text-align: left;
+      font-size: 14px;
+      text-shadow: none;
+      color: black;
+      padding: 5px 8px;
+      border-radius: 1px;
+
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .image-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .image-container img {
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+
+
+<body class="bg-gray-100">
+  <!-- Top Bar -->
+  <header class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <!-- Left: Logo + Navigation -->
+        <div class="flex items-center space-x-8">
+          <div class="text-xl font-bold text-blue-600">
+            SuggestMetrics
+          </div>
+
+          <!-- Navigation Links -->
+          <nav class="hidden md:flex space-x-6 text-gray-700">
+              <a href="/suggestMetrics" class="hover:text-blue-600 transition">Home</a>
+              <a href="/suggestMetrics/metricsExplained" class="hover:text-blue-600 transition">Metrics
+                        Explained</a>
+              <a href="/suggestMetrics/about" class="hover:text-blue-600 transition">About</a>
+          </nav>
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Image + Tooltips -->
+  <div class="image-container">
+    <img src="../static/images/CLASSIFICATION_FINAL.png" alt="Sample Image" />
+
+    <!-- Tooltip for "Which column is the class?" -->
+    <div class="absolute text-white text-2xl font-bold" style="top: 16%; left: 39.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-blue-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">This is a custom tooltip!</span>
+      </p>
+    </div>
+
+    <!-- Tooltip for "What is the positive class? -->
+    <div class="absolute text-white text-2xl font-bold" style="top: 26%; left: 39.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-blue-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">This is a custom tooltip!</span>
+      </p>
+    </div>
+
+    <!-- Tooltip for binary "Is misclassification costly or otherwise problematic?" -->
+    <div class="absolute text-white text-2xl font-bold" style="top: 57.5%; left: 20.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-blue-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">This is a custom tooltip!</span>
+      </p>
+    </div>
+
+    <!-- Tooltip for binary "Are you concerned about the performance of specific classes?" -->
+    <div class="absolute text-white text-2xl font-bold" style="top: 57.5%; left: 8%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-blue-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">This is a custom tooltip!</span>
+      </p>
+    </div>
+
+    <!-- Tooltip to explain the imbalance ratio -->
+    <div class="absolute text-white text-2xl font-bold" style="top: 56%; left: 37.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-blue-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">This is a custom tooltip!</span>
+      </p>
+    </div>
+
+    <!-- Tooltip for "number of minority classes" -->
+    <div class="absolute text-white text-2xl font-bold" style="top: 56%; left: 51.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-blue-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">This is a custom tooltip!</span>
+      </p>
+    </div>
+
+    <!-- Tooltip to explain the imbalance degree -->
+    <div class="absolute text-white text-2xl font-bold" style="top: 53.5%; left: 67.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-blue-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">This is a custom tooltip!</span>
+      </p>
+    </div>
+
+    <!-- Tooltip for multiclass "Are you concerned about the performance of specific classes?" -->
+    <div class="absolute text-white text-2xl font-bold" style="top: 57.5%; left: 78.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-blue-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">This is a custom tooltip!</span>
+      </p>
+    </div>
+
+    <!-- Tooltip for multiclass "Is misclassification costly or otherwise problematic?" -->
+    <div class="absolute text-white text-2xl font-bold" style="top: 57.5%; left: 90.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-blue-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">This is a custom tooltip!</span>
+      </p>
+    </div>
+
+  </div>
+</body>
+</html>
