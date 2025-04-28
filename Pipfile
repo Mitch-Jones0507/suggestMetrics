@@ -9,6 +9,7 @@ numpy = "*"
 pandas = "*"
 statsmodels = "*"
 gunicorn = "*"
+whitenoise = "*"
 
 [dev-packages]
 
