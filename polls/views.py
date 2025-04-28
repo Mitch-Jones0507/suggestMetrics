@@ -35,3 +35,9 @@ def about(request):
 
 def metricsExplained(request):
     return render(request, "metricsExplained.html")
+
+def regressionExplained(request):
+    return render(request, "regressionExplained.html")
+
+def classificationExplained(request):
+    return render(request, "classificationExplained.html")

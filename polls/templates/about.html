@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SuggestMetrics</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../static/style.css">
 </head>
 
 
@@ -22,17 +22,13 @@
 
           <!-- Navigation Links -->
           <nav class="hidden md:flex space-x-6 text-gray-700">
-            <a href="/suggestMetrics" class="hover:text-blue-600 transition">Home</a>
-            <a href="/suggestMetrics/about" class="hover:text-blue-600 transition">About</a>
-            <a href="/suggestMetrics/metricsExplained" class="hover:text-blue-600 transition">Metrics Explained</a>
+              <a href="/suggestMetrics" class="hover:text-blue-600 transition">Home</a>
+              <a href="/suggestMetrics/metricsExplained" class="hover:text-blue-600 transition">Metrics
+                        Explained</a>
+              <a href="/suggestMetrics/about" class="hover:text-blue-600 transition">About</a>
           </nav>
         </div>
 
-        <!-- Right: Log in Button -->
-        <div class="hidden md:block">
-          <a href="#" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-            Log in
-          </a>
         </div>
       </div>
     </div>
@@ -40,25 +36,46 @@
 
 <div class="team-section">
   <div class="team-member">
-    <img src="https://via.placeholder.com/400x300" alt="Co-Creator">
+    <img src="../static/images/cong.jpeg" alt="Co-Creator">
     <h3>Cong Wang</h3>
-    <p>MSc *insert course title here*.</p>
-    <p>Back-end Developer</p>
+      <p>Student ID: 201799740</p>
+    <p>MSc Big Data and High Performance Computing.</p>
+    <p>Full-Stack Developer</p>
   </div>
   <div class="team-member">
-    <img src="https://via.placeholder.com/400x300" alt="Co-Creator">
+    <img src="../static/images/IMG_0147.jpg" alt="Co-Creator">
     <h3>Mitch Jones</h3>
-    <p>MSc *insert course title here*.</p>
-    <p>Front-end Developer</p>
+      <p>Student ID: 201902635</p>
+    <p>MSc Data Science and Artificial Intelligence.</p>
+    <p>Full-Stack Developer</p>
   </div>
   <div class="team-member">
-    <img src="../Images/nathan.jpg" alt="Co-Creator">
+    <img src="../static/images/nathan.jpg" alt="Co-Creator">
     <h3>Nathan Donohue</h3>
       <p>Student ID: 201314207</p>
-    <p>MSc Big Data and High Performance Computing</p>
-    <p>Front-end Developer</p>
+    <p>MSc Big Data and High Performance Computing.</p>
+    <p>Full-Stack Developer</p>
   </div>
+
 </div>
+
+<div class="mt-16 bg-blue-100 text-blue-900 p-6 rounded-lg shadow">
+  <h2 class="text-xl font-semibold mb-2">Our Goal</h2>
+  <p>
+    For our MSc project, we were tasked with creating a Machine Learning (ML) performance evaluator which is essential
+    for ensuring that models are not only accurate but also reliable, fair, and efficient. As ML systems are
+    increasingly integrated into critical decision-making processes—from healthcare to finance—it's vital to
+    rigorously assess how well they perform across different metrics such as accuracy, precision, recall, F1
+    score, and even fairness indicators. A performance evaluator provides a structured, consistent way to
+    benchmark models, detect potential issues like overfitting or data bias, and guide model improvement. Without
+    proper evaluation, an ML model may appear effective during development but fail in real-world scenarios.
+    Additionally, an evaluator enables better transparency and accountability, which is crucial for ethical AI
+    deployment. It also facilitates reproducibility and communication between stakeholders, allowing data
+    scientists, engineers, and non-technical decision-makers to understand and trust model behavior. In conclusion,
+    an ML performance evaluator is key to building robust, trustworthy, and impactful AI systems.
+  </p>
+</div>
+
 
 </body>
 </html>

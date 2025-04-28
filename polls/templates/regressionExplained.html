@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SuggestMetrics</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .tooltip {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .tooltip .tooltip-text {
+      visibility: hidden;
+      width: 400px;
+      background-color: white;
+      border: 2px solid black;
+      text-align: left;
+      font-size: 14px;
+      text-shadow: none;
+      color: black;
+      padding: 5px 8px;
+      border-radius: 1px;
+
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .image-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .image-container img {
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100">
+  <!-- Top Bar -->
+  <header class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <!-- Left: Logo + Navigation -->
+        <div class="flex items-center space-x-8">
+          <div class="text-xl font-bold text-blue-600">
+            SuggestMetrics
+          </div>
+
+          <!-- Navigation Links -->
+            <nav class="hidden md:flex space-x-6 text-gray-700">
+              <a href="/suggestMetrics" class="hover:text-blue-600 transition">Home</a>
+              <a href="/suggestMetrics/metricsExplained" class="hover:text-blue-600 transition">Metrics
+                        Explained</a>
+              <a href="/suggestMetrics/about" class="hover:text-blue-600 transition">About</a>
+            </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Image + Tooltips -->
+  <div class="image-container">
+    <img src="../static/images/MODEL_RELATION.png" alt="Sample Image" />
+
+    <!-- Tooltip for "What is the target variable(TV)?" -->
+    <div class="absolute text-white text-2xl" style="top: 10%; left: 41.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-blue-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">This is a custom tooltip!</span>
+      </p>
+    </div>
+
+    <!-- Tooltip for "Will it fit a polynomial function to capture curvature in the data?" -->
+    <div class="absolute text-white text-2xl" style="top: 19%; left: 41.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-blue-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">This is a custom tooltip!</span>
+      </p>
+    </div>
+
+    <!-- Tooltip for "What are the predictor variables?" -->
+    <div class="absolute text-white text-2xl" style="top: 34%; left: 45%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-blue-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">This is a custom tooltip!</span>
+      </p>
+    </div>
+
+    <!-- Tooltip for "Condition number" explanation -->
+    <div class="absolute text-white text-2xl" style="top: 61.8%; left: 5.2%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-blue-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">The condition number measures how sensitive a regression model or matrix is to small changes in the data. It is calculated using the ratio
+        of the largest to smallest eigenvalues. A high condition number suggests multicollinearity — meaning predictors are highly correlated, making the model unstable. A
+        low condition number means the model is well-behaved and reliable. It helps diagnose problems before fitting a regression.</span>
+      </p>
+    </div>
+
+    <!-- Tooltip for "Subject per Predictor" formula -->
+    <div class="absolute text-white text-2xl" style="top: 60%; left: 11.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-red-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">n represents the total number of subjects in the dataset.<br><br>p represents the total number of predictors in the model.</span>
+      </p>
+    </div>
+
+    <!-- Tooltip for "Outlier Rate" explanation -->
+    <div class="absolute text-white text-2xl" style="top: 61.8%; left: 20.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-blue-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">In regression, the outlier rate refers to the proportion of data points that significantly deviate from the expected relationship between
+        variables. These outliers can distort model accuracy by disproportionately influencing the regression line. Identifying and addressing outliers is crucial for
+        improving model performance and ensuring more reliable predictions.</span>
+      </p>
+    </div>
+
+    <!-- Tooltip for "Coefficient of Variation" formula -->
+    <div class="absolute text-white text-2xl" style="top: 60.5%; left: 29%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-red-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">σ represents the standard deviation of the data.<br><br>μ represents the mean of the data.</span>
+      </p>
+    </div>
+
+    <!-- Tooltip for "Coefficient of Outlier Rate" formula -->
+    <div class="absolute text-white text-2xl" style="top: 56.8%; left: 44.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-red-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">eᵢ represents the residual for the i-th observation (difference between actual and predicted value).<br><br>p represents the number of
+        predictors in the model.<br><br>s² represents mean squared error - an estimate of the variance of the residuals.<br><br>hᵢᵢ represents the leverage value for the
+        i-th observation (how much influence that point has).</span>
+      </p>
+    </div>
+
+    <!-- Tooltip for "Coefficient of Variation" explanation -->
+    <div class="absolute text-white text-2xl" style="top: 61.8%; left: 55%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-blue-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">The coefficient of variation (CV) in regression is a statistical measure of the relative variability of a dataset. It is the ratio of
+        the standard deviation to the mean, expressed as a percentage. A higher CV indicates greater variability in the data relative to the mean, which helps assess
+        risk or consistency.</span>
+      </p>
+    </div>
+
+    <!-- Tooltip for "What is the highest degree polynomial term to be used in your model?"-->
+    <div class="absolute text-white text-2xl" style="top: 61.8%; left: 62%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-blue-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">In regression, the highest degree polynomial term refers to the most complex transformation of the predictor variable considered for
+        splitting the data. The highest degree polynomial term is relevant when considering feature engineering, but decision trees focus more on data segmentation than
+         polynomial relationships.</span>
+      </p>
+    </div>
+
+    <!-- Tooltip for "Subjects per Predictor (SPV)" explained-->
+    <div class="absolute text-white text-2xl" style="top: 61.4%; left: 76.7%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-blue-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">"Subject per predictor" in regression refers to the number of data points (subjects) available for each predictor (independent variable)
+        in a model. A higher ratio ensures more reliable and stable estimates of regression coefficients. Too few subjects per predictor may lead to overfitting, unreliable
+        results, or poor generalisation.</span>
+      </p>
+    </div>
+
+    <!-- Tooltip for "Condition Number (CN)" formula-->
+    <div class="absolute text-white text-2xl" style="top: 58.4%; left: 81.7%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+      <p class="text-red-500 tooltip">
+        <b>[?]</b>
+        <span class="tooltip-text">λₘₐₓ represents the largest eigenvalue of the dataset.<br><br>λₘᵢₙ represents the smallest eigenvalue of the dataset.</span>
+      </p>
+    </div>
+
+  </div>
+
+  <script>
+    // Smart tooltip positioning to prevent overflow
+    document.querySelectorAll('.tooltip').forEach(function(tooltip) {
+      tooltip.addEventListener('mouseenter', function() {
+        const tooltipText = tooltip.querySelector('.tooltip-text');
+        tooltipText.style.left = '50%';
+        tooltipText.style.transform = 'translateX(-50%)'; // reset defaults
+
+        const rect = tooltipText.getBoundingClientRect();
+
+        if (rect.right > window.innerWidth) {
+          tooltipText.style.left = 'auto';
+          tooltipText.style.right = '0';
+          tooltipText.style.transform = 'none';
+        }
+
+        if (rect.left < 0) {
+          tooltipText.style.left = '0';
+          tooltipText.style.right = 'auto';
+          tooltipText.style.transform = 'none';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
