@@ -107,7 +107,9 @@
                         const selectedColumn = e.target.value;
                         const values = data.map(row => row[selectedColumn]);
                         const uniqueValues = [...new Set(values)];
-                        generateDropdown(uniqueValues, 'positiveClass', columnSelector, 'Choose the positive class:');
+                        if (uniqueValues.length === 2) {
+                            generateDropdown(uniqueValues, 'positiveClass', columnSelector, 'Choose the positive class:');
+                        }
                     });
 
                     generateQuestion("isCostSensitive", columnSelector, "Is misclassification costly or otherwise problematic?");
