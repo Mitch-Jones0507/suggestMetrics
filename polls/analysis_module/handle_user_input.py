@@ -39,7 +39,7 @@ def classification_analysis(df, target, positive_class, is_cost_sensitive, is_sp
     if len(class_counter) == 2:
         max_num = max(class_counter.values())
         min_num = min(class_counter.values())
-        imbalance_ratio = max_num / min_num
+        imbalance_ratio = round(max_num / min_num, 2)
         if imbalance_ratio > 3.0 and class_counter[positive_class] == min_num:
             result['imbalance_ratio'] = (imbalance_ratio, 'Macro F1')
         else:
@@ -56,7 +56,8 @@ def classification_analysis(df, target, positive_class, is_cost_sensitive, is_sp
             max_diff_vals = [x for x in minority_classes if x == max_diff_val]
         numerator = sqrt(sum((x - y) ** 2 for x, y in zip(empirical_distribution, balanced_distribution)))
         denominator = sqrt(sum((x - y) ** 2 for x, y in zip(max_diff_vals, [mean] * len(max_diff_vals))))
-        imbalance_degree = numerator / denominator + (num_minority_classes - 1) if num_minority_classes else -1
+        imbalance_degree = round(numerator / denominator + (num_minority_classes - 1),
+                                 2) if num_minority_classes else -1
         if imbalance_degree <= 1.0:
             result['imbalance_degree'] = (imbalance_degree, 'Accuracy')
         else:
@@ -90,7 +91,7 @@ def regression_analysis(df, features, target, is_polynomial, degree_of_polynomia
     cooks_d, _ = influence.cooks_distance
     threshold = 4 / len(df)
     influential_points = np.where(cooks_d > threshold)[0]
-    outlier_rate = len(influential_points) / len(df)
+    outlier_rate = round(len(influential_points) / len(df), 2)
     if outlier_rate < 0.05:
         result["outlier_rate"] = (outlier_rate * 100, 'R Square')
     else:
@@ -99,19 +100,19 @@ def regression_analysis(df, features, target, is_polynomial, degree_of_polynomia
     if len(features) < 2:
         mean = np.mean(df[target])
         std = np.std(df[target], ddof=0)
-        coefficient_of_variation = std / mean
+        coefficient_of_variation = round(std / mean, 2)
         if coefficient_of_variation > 0.1:
             result["coefficient_of_variation"] = (coefficient_of_variation, 'R Square')
         else:
             result["coefficient_of_variation"] = (coefficient_of_variation, 'MAE')
     else:
-        condition_number = np.linalg.cond(df[features].to_numpy())
+        condition_number = round(np.linalg.cond(df[features].to_numpy()), 2)
         if condition_number < 30:
             result["condition_number"] = (condition_number, 'R Square')
         else:
             result["condition_number"] = (condition_number, 'MAE')
 
-        subjects_per_predictor = len(df) / len(features)
+        subjects_per_predictor = round(len(df) / len(features), 2)
         if subjects_per_predictor > 10:
             result["subjects_per_predictor"] = (subjects_per_predictor, 'R Square')
         else:
