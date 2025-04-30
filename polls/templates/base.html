@@ -3,9 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Bar Example</title>
+    <title>suggestMetrics</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
+<style>
+    .box {
+        background-color: #e5e7eb; /* Tailwind's bg-gray-200 */
+        border-radius: 1rem; /* Tailwind's rounded-2xl */
+        padding: 1rem;
+        width: 100%;
+        max-width: 500px;
+        margin: 1rem auto;
+        cursor: pointer;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* subtle shadow */
+        transition: background-color 0.3s ease;
+    }
+
+    .content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-out;
+    }
+
+    .content.show {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      margin-top: 0.5rem;
+    }
+
+    .box:hover {
+      background-color: #d1d5db;
+    }
+  </style>
+
 <!-- Top Bar -->
 <header class="bg-white shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,6 +66,15 @@
           id="base_form">
         {% csrf_token %}
         <fieldset>
+            <h1 class="text-[20px] font-semibold text-gray-700 mb-[10px]">Step 1. Task Selection</h1>
+            <p>In this section, you should define which ML task your model will undertake. In this program, classification and model relation (regression) tasks are available for analysis.</p>
+            <div class="box" onclick="toggleBox(this)">
+                <h1 class="text-[18px] text-gray-700 text-center"><b>What are ML tasks?</b></h1>
+            <div class="content" id="expandableContent">
+                <p><br>They are what you want your model to learn how to do. <br><br> Suppose you have gathered data on the square footage, number of bedrooms, and location of houses in your area. You want your model to predict whether a house will fall in particular, <b>discrete</b> price ranges. Since you are assigning a category or class as your output, your model would undertake classification task.
+                    Suppose instead you want your model to predict the <b>exact</b> price of a house instead of a class, your model would undertake a regression task. In both cases, whether you’re predicting a category or an exact value, you’re defining the specific outcome you want the model to learn, which is the essence of an ML task. </p>
+            </div>
+            </div>
             <label for="task">Choose a task:</label>
             <select id="task" name="task"
                     class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none w-60"
@@ -44,8 +85,10 @@
             </select>
         </fieldset>
         <fieldset>
+            <h1 class="text-[20px] font-semibold text-gray-700 mb-[10px]">Step 2. Data Upload</h1>
+            <p class="mb-[10px]">Upload your data here. In this program, only CSV files are accepted.</p>
             <label for="userData"
-                   class="inline-block bg-blue-600 text-white text-lg py-2 px-6 rounded-xl shadow-md cursor-pointer hover:bg-blue-700 transform hover:scale-105 transition-all duration-300 ease-in-out">
+                   class="inline-block bg-blue-600 text-white py-2 px-6 rounded-xl shadow-md cursor-pointer hover:bg-blue-700 transform hover:scale-105 transition-all duration-300 ease-in-out">
                 Upload CSV
             </label>
             <input type="file" id="userData" name="user_data" accept="text/csv" required class="hidden"/>
@@ -64,11 +107,50 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
 <script>
+  function toggleBox(boxElement) {
+    const content = boxElement.querySelector(".content");
+    if (content.style.maxHeight) {
+      // It's open, so close it
+      content.style.maxHeight = null;
+    } else {
+      // It's closed, so expand to fit content
+      content.style.maxHeight = content.scrollHeight + "px";
+    }
+  }
+</script>
+
+<script>
     document.getElementById("base_form").addEventListener('change', (event) => {
         const eventType = event.target.id
         if (eventType !== "task" && eventType !== "userData") return;
 
         const columnSelector = document.getElementById('columnSelector');
+        const user_requirements = document.createElement('h1')
+        user_requirements.textContent = 'Step 3. User Requirements'
+        user_requirements.className = 'text-[20px] font-semibold text-gray-700 mb-[10px]'
+
+        const polynomialWrapper = document.createElement('div')
+        polynomialWrapper.innerHTML = `
+        <div class="box" onclick="toggleBox(this)">
+            <h1 class="text-[18px] text-center">What is a polynomial fit?</h1>
+            <div class="content" id="expandableContent">
+                <p><br>This means you may want to fit a <b>curved line</b> rather than a straight one to best match your data.
+                <br><br> Rather than y = mx +b, your regression coefficients would look like y = a + b·x + c·x² + d·x³ + ...
+                </p>
+            </div>
+        </div>
+`;
+        const misclassificationWrapper = document.createElement('div')
+        misclassificationWrapper.innerHTML = `
+        <div class="box" onclick="toggleBox(this)">
+            <h1 class="text-[18px] text-center">What does this mean?</h1>
+            <div class="content" id="expandableContent">
+                <p><br>Does your model making a wrong prediction have <b>serious consequences</b> in your situation?
+                <br><br> Suppose you were doing a medical diagnosis for a disease that is very severe. Classifying a patient as 'negative' or 'healthy' can have extremely problematic consequences. Alternatively, suppose a model is predicting whether you should or should not watch a movie, in this case, misclassification is not overly serious!
+                </p>
+            </div>
+        </div>
+`;
 
         const file = document.getElementById('userData').files[0];
         if (!file) return;
@@ -86,13 +168,21 @@
 
                 columnSelector.innerHTML = '';
                 if (task === 'regression') {
-                    generateDropdown(headers, 'target', columnSelector, 'What are you trying to predict? (target variable)');
-                    generateCheckboxes(headers, columnSelector, 'What variables are you using to predict your target?');
-                    generateQuestion("isPolynomial", columnSelector, "Do you expect your data to be curved or shaped in a non-linear way? Would you like to model polynomial fit?");
+
+                    columnSelector.appendChild(user_requirements)
+
+                    generateDropdown(headers, 'target', columnSelector, 'Q1. What are you trying to predict? (target variable)');
+                    addDivider();
+                    generateCheckboxes(headers, columnSelector, 'Q2. What variables are you using to predict your target?');
+                    addDivider();
+                    generateQuestion("isPolynomial", columnSelector, "Q3. Do you expect your data to be curved or shaped in a non-linear way? Would you like to model polynomial fit?");
+                    columnSelector.appendChild(polynomialWrapper)
+                    addDivider();
+
 
                     document.getElementById('isPolynomial_yes').addEventListener('change', () => {
                         options = ['2', '3', 'more than 3']
-                        generateDropdown(options, 'degreeOfPolynomial', columnSelector, 'What do you expect to be your highest degree polynomial term in your model?');
+                        generateDropdown(options, 'degreeOfPolynomial', columnSelector, 'Q4. What do you expect to be your highest degree polynomial term in your model?');
                     });
                     document.getElementById('isPolynomial_no').addEventListener('change', () => {
                         const oldSelect = document.getElementById('degreeOfPolynomial');
@@ -101,17 +191,25 @@
                         }
                     });
                 } else if (task === 'classification') {
-                    generateDropdown(headers, 'target', columnSelector, 'Choose the column of classes:');
+
+                    columnSelector.appendChild(user_requirements)
+
+                    generateDropdown(headers, 'target', columnSelector, 'Choose the column of your data that contains your classes:');
+                    addDivider();
 
                     document.getElementById('target').addEventListener('change', function (e) {
                         const selectedColumn = e.target.value;
                         const values = data.map(row => row[selectedColumn]);
                         const uniqueValues = [...new Set(values)];
                         generateDropdown(uniqueValues, 'positiveClass', columnSelector, 'Choose the positive class:');
+                        addDivider();
                     });
 
                     generateQuestion("isCostSensitive", columnSelector, "Is misclassification costly or otherwise problematic?");
+                    columnSelector.appendChild(misclassificationWrapper)
+                    addDivider();
                     generateQuestion("isSpecific", columnSelector, "Are you concerned about the performance of specific classes?");
+                    addDivider();
                 } else if (task === 'clustering') {
                     generateCheckboxes(headers, columnSelector, 'Choose the feature columns:');
                 }
@@ -234,5 +332,11 @@
 
         container.appendChild(wrapper);
     }
+
+    function addDivider() {
+    const divider = document.createElement('hr');
+    divider.className = 'my-4 border-gray-300';
+    columnSelector.appendChild(divider);
+}
 </script>
 </html>
