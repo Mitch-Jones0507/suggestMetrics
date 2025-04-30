@@ -88,7 +88,7 @@
             suggestion += `
             <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mt-3 mb-3 shadow-sm">
                 <span class="text-gray-700 text-sm">
-                    Imbalance Ratio <span class="text-blue-700 text-sm"><a href="/suggestMetrics/classificationExplained">[GM-7]</a></span> is
+                    Imbalance Ratio <span class="text-blue-700 text-sm"><a href="/suggestMetrics/classificationExplained">[C5]</a></span> is
                     <span class="font-semibold">{{ result.imbalance_ratio.0 }}</span>,
                     so <span class="font-semibold">{{ result.imbalance_ratio.1 }}</span> is suggested for this feature.
                 </span>
@@ -103,7 +103,7 @@
             suggestion += `
             <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mt-3 mb-3 shadow-sm">
                 <span class="text-gray-700 text-sm">
-                    Imbalance Degree <span class="text-blue-700 text-sm"><a href="/suggestMetrics/classificationExplained">[GM-9]</a></span> is
+                    Imbalance Degree <span class="text-blue-700 text-sm"><a href="/suggestMetrics/classificationExplained">[C7]</a></span> is
                     <span class="font-semibold">{{ result.imbalance_degree.0 }}</span>,
                     so <span class="font-semibold">{{ result.imbalance_degree.1 }}</span> is suggested for this feature.
                 </span>
@@ -112,7 +112,7 @@
             suggestion += `
             <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mt-3 mb-3 shadow-sm">
                 <span class="text-gray-700 text-sm">
-                    The number of minority classes <span class="text-blue-700 text-sm"><a href="/suggestMetrics/classificationExplained">[GM-8]</a></span> is
+                    The number of minority classes <span class="text-blue-700 text-sm"><a href="/suggestMetrics/classificationExplained">[C6]</a></span> is
                     <span class="font-semibold">{{ result.num_minority_classes.0 }}</span>,
                     so <span class="font-semibold">{{ result.num_minority_classes.1 }}</span> is suggested for this feature.
                 </span>
@@ -128,7 +128,7 @@
         <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mt-3 mb-3 shadow-sm">
             <span class="text-gray-700 text-sm">
                 Misclassification
-                <span class="font-semibold">{{ result.is_cost_sensitive.0|is_or_not }}</span> costly or otherwise problematic <span class="text-blue-700 text-sm"><a href="/suggestMetrics/classificationExplained">[GM-5]</a></span>,
+                <span class="font-semibold">{{ result.is_cost_sensitive.0|is_or_not }}</span> costly or otherwise problematic <span class="text-blue-700 text-sm"><a href="/suggestMetrics/classificationExplained">[C8]</a></span>,
                 so <span class="font-semibold">{{ result.is_cost_sensitive.1 }}</span> is suggested for this requirement.
             </span>
         </div>
@@ -138,7 +138,7 @@
         <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mt-3 mb-3 shadow-sm">
             <span class="text-gray-700 text-sm">
                 Specific class performance
-                <span class="font-semibold">{{ result.is_specific.0|is_or_not }}</span> concerned about <span class="text-blue-700 text-sm"><a href="/suggestMetrics/classificationExplained">[GM-6]</a></span>,
+                <span class="font-semibold">{{ result.is_specific.0|is_or_not }}</span> concerned about <span class="text-blue-700 text-sm"><a href="/suggestMetrics/classificationExplained">[C4]</a></span>,
                 so <span class="font-semibold">{{ result.is_specific.1 }}</span> is suggested for this requirement.
             </span>
         </div>

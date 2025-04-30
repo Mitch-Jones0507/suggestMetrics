@@ -92,7 +92,7 @@
         suggestion += `
         <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mt-3 mb-3 shadow-sm">
             <span class="text-gray-700 text-sm">
-                Percentage of outliers within the dataset is
+                Percentage of outliers <span class="text-blue-700 text-sm"><a href="/suggestMetrics/regressionExplained">[MR6]</a></span> within the dataset is
                 <span class="font-semibold">{{ result.outlier_rate.0 }}%</span>,
                 so <span class="font-semibold">{{ result.outlier_rate.1 }}</span> is suggested.
             </span>
@@ -103,7 +103,7 @@
             suggestion += `
             <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mt-3 mb-3 shadow-sm">
                 <span class="text-gray-700 text-sm">
-                    Coefficient of Variation is
+                    Coefficient of Variation <span class="text-blue-700 text-sm"><a href="/suggestMetrics/regressionExplained">[MR5]</a></span> is
                     <span class="font-semibold">{{ result.coefficient_of_variation.0 }}</span>,
                     so <span class="font-semibold">{{ result.coefficient_of_variation.1 }}</span> is suggested.
                 </span>
@@ -113,7 +113,7 @@
             suggestion += `
             <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mt-3 mb-3 shadow-sm">
                 <span class="text-gray-700 text-sm">
-                    Condition Number is
+                    Condition Number <span class="text-blue-700 text-sm"><a href="/suggestMetrics/classificationExplained">[MR8]</a></span> is
                     <span class="font-semibold">{{ result.condition_number.0 }}</span>,
                     so <span class="font-semibold">{{ result.condition_number.1 }}</span> is suggested.
                 </span>
@@ -122,7 +122,7 @@
             suggestion += `
             <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mt-3 mb-3 shadow-sm">
                 <span class="text-gray-700 text-sm">
-                    Subjects per Predictor is
+                    Subjects per Predictor <span class="text-blue-700 text-sm"><a href="/suggestMetrics/classificationExplained">[MR4]</a></span> is
                     <span class="font-semibold">{{ result.subjects_per_predictor.0 }}</span>,
                     so <span class="font-semibold">{{ result.subjects_per_predictor.1 }}</span> is suggested.
                 </span>
@@ -138,7 +138,7 @@
             suggestion += `
             <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mt-3 mb-3 shadow-sm">
                 <span class="text-gray-700 text-sm">
-                    The degree of Polynomial is
+                    The degree of polynomial <span class="text-blue-700 text-sm"><a href="/suggestMetrics/classificationExplained">[MR7]</a></span> is
                     <span class="font-semibold">{{ result.degree_of_polynomial.0 }}</span>,
                     so <span class="font-semibold">{{ result.degree_of_polynomial.1 }}</span> is suggested.
                 </span>
