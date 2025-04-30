@@ -17,13 +17,14 @@
       visibility: hidden;
       width: 400px;
       background-color: white;
-      border: 2px solid black;
+      border: 3px solid royalblue;
       text-align: left;
       font-size: 14px;
       text-shadow: none;
       color: black;
       padding: 5px 8px;
       border-radius: 1px;
+        overflow-wrap: break-word;
 
       position: absolute;
       z-index: 1;
@@ -83,74 +84,66 @@
     <img src="../static/images/CLASSIFICATION_FINAL.png" alt="Sample Image" />
 
     <!-- Tooltip for "Which column is the class?" -->
-    <div class="absolute text-white text-2xl font-bold" style="top: 16%; left: 39.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+    <div class="absolute text-white text-2xl leading-tight" style="top: 14.6%; left: 68.2%; transform: translate(-50%, -50%); text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">
       <p class="text-blue-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">This is a custom tooltip!</span>
+        <b>[C1]</b>
+          <span class="tooltip-text">This question defines the <b>target space</b> of the task, allowing the system to analyse exactly the classes that the user is trying to predict using their model.</span>
       </p>
     </div>
 
     <!-- Tooltip for "What is the positive class? -->
-    <div class="absolute text-white text-2xl font-bold" style="top: 26%; left: 39.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+    <div class="absolute text-white text-2xl leading-tight" style="top: 25%; left: 66%; transform: translate(-50%, -50%); text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">
       <p class="text-blue-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">This is a custom tooltip!</span>
+        <b>[C2]</b>
+          <span class="tooltip-text">The system checks for the total number of classes in the user's task. This allows the system to differentiate between a <b>binary</b> and <b>multiclass</b> scenario, which possess separate features to analyse.</span>
+      </p>
+    </div>
+
+          <div class="absolute text-white text-2xl leading-tight" style="top:39%; left: 20%; transform: translate(-50%, -50%); text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">
+      <p class="text-blue-500 tooltip">
+        <b>[C3]</b>
+          <span class="tooltip-text">This question defines the <b>positive class</b> of the binary classification task. A positive class refers to a class that the user is actively trying to predict.</span>
       </p>
     </div>
 
     <!-- Tooltip for binary "Is misclassification costly or otherwise problematic?" -->
-    <div class="absolute text-white text-2xl font-bold" style="top: 57.5%; left: 20.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+    <div class="absolute text-white text-2xl leading-tight" style="top: 54%; left: 20.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">
       <p class="text-blue-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">This is a custom tooltip!</span>
-      </p>
-    </div>
-
-    <!-- Tooltip for binary "Are you concerned about the performance of specific classes?" -->
-    <div class="absolute text-white text-2xl font-bold" style="top: 57.5%; left: 8%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
-      <p class="text-blue-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">This is a custom tooltip!</span>
+        <b>[C4]</b>
+          <span class="tooltip-text">This question queries the user on their concern for particular class performance or overall model performance. Accuracy is a measure of the overall proportion of correct guesses across <b>all classes</b>, whereas macroF1 gives <b>equal weight</b> to the F1 score of each class individually. If the answer is no, accuracy is a suggested metric. If the answer is yes, macroF1 is a suggested metric. <a href="https://watermark.silverchair.com/tacl_a_00675.pdf?token=AQECAHi208BE49Ooan9kkhW_Ercy7Dm3ZL_9Cf3qfKAc485ysgAAA0YwggNCBgkqhkiG9w0BBwagggMzMIIDLwIBADCCAygGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMeL9NNROzf2COprjKAgEQgIIC-fa1mi6J6EXCTPgcCFCfKcyHNtpR8H22E3BfQAUynDFqoNumgurZV5fg50j76pV9pb0yS5b0vbfXlz9B0yMuOkb9oRSUdiIomdfxKp_RmagHA5m6OglpiKu4KHroy0-LDD51937yF0UQmT8lT-Wmn3xY0m7lsh3gE3EqYRPla0Ko1W1yQa63wmDAtwfSgjO9njJjD-qfzM7Xc3ODvxA0Q1TiKaJ_ddCJhFGkNJBX63e7d8Za6OjHGdRIJPeJBgai40XOnxWmK6ohpfXjp6c8c5Kn_EvlrJ7b9ugXzzYxI_gm5v0Ipw9WkQaz2qW-zEI43g7DNzKL-N1arnjnSuB53ymX6iXAFMWnTjCYmJxHhLJEbVig7N7EJgmsYvuYoxMvhCG9BrYDXmDy-1egftFVAzfYLnJ4AzSWPVa1HsgnMOYKL8Z-Tdj4XAR4VQ0GxyGbyJbMKZqDbafv6Jf9_2W__3q4J-CJzBILVIrgUp4aYl0dPnOjAr8AKv2_TZvPxMjMwpO0fRAcIT7YL6-1vh3AzmuCU28jIivOsLLJONK4GS3OvnUDbkdyf2kA0_if5oAJXZ8Gg0apKa5zkhNTFmWfMgZmvIZBQiRpt8bpcD5qsug3X9SbZXe9pcUzS7fct9kK-KlNnPO63ic-0VdMEu31OeLiipwO8o9-BVBVvJD7ENQgEcKRbhlUuR0SghzviMc7bnWwZ3X067-Zsuf7nczp5-1vSUB0mi1WfyUN2bYRF9wcMYvZ2sMRVz2qjeRkFe_I-zBquSDg98TW8JVTqpmH_asUvFmSKHESZgrZ_EXDglSXq6ahlgem47lnuS3VUC-8nBPy490bvjeA9Wk56kpL6fe3DVX-Xz_6hiH8eig-oU0swJ4rIOHom8NGlyI3jyz9uuT7qd-yXOznlVQ3vhy2LMQExPUpx6-fekvQouCrLSdZ9ZiSYvxHtU_xoU05TTMlBGQy5veSotPJl2WmvazdmDzvGI-bQJl3G8VZZv8qV8XsVkRpmBKvSzxR" style="color: blue">Juri Optiz, 2024</a></span>
       </p>
     </div>
 
     <!-- Tooltip to explain the imbalance ratio -->
-    <div class="absolute text-white text-2xl font-bold" style="top: 56%; left: 37.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
-      <p class="text-blue-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">This is a custom tooltip!</span>
+    <div class="absolute text-white text-2xl leading-tight" style="top: 56%; left: 37.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">
+      <p class="text-red-500 tooltip">
+        <b>[C5]</b>
+        <span class="tooltip-text">This feature analyses the number of instances (empirical class distribution) of the majority class divided by the number of instances of the minority class. If this ratio exceeds a threshold of 3 in favour of the negative class, macroF1 is suggested, whereas if this threshold exceeds 3 in favour of the positive class, accuracy is suggested. <a href="https://www.sciencedirect.com/science/article/pii/S0957417423032803" style="color:blue">Azal Ahmad Khan, 2024</a></span>
       </p>
     </div>
 
     <!-- Tooltip for "number of minority classes" -->
-    <div class="absolute text-white text-2xl font-bold" style="top: 56%; left: 51.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
-      <p class="text-blue-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">This is a custom tooltip!</span>
+    <div class="absolute text-white text-2xl leading-tight" style="top: 55.7%; left: 51.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">
+      <p class="text-red-500 tooltip">
+        <b>[C6]</b>
+          <span class="tooltip-text">This feature analyses the number of minority classes in your multiclass system. If this number exceeds a threshold of 3, macroF1 is suggested, else accuracy is suggested. Because m reaches a notable level, a metric that is <b>decomposable</b> or averaged over classes is valuable to report general performance of the model. <a href="https://watermark.silverchair.com/tacl_a_00675.pdf?token=AQECAHi208BE49Ooan9kkhW_Ercy7Dm3ZL_9Cf3qfKAc485ysgAAA0YwggNCBgkqhkiG9w0BBwagggMzMIIDLwIBADCCAygGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMkM1X7Ig75Ah_IOLGAgEQgIIC-f5etwmg7mAOmViILCZ2dMvfiDRMfTRAv-wj8W0F4CIvAHngeEV02ex19tEgytaWFbzDFyB725hmtOwEgHmXGSrTCYd-Pt7jmdJEz2o6h11ukIvXsK_dxrtZCqh9osKH5sw_zQgH3LQn7rzraMwmAVxFCduZS8dBEY-EEB9-RYbXnjadIFhllkGKAaiU7-u5jebiA1yLcGaTkdu6f-M0Sv1Rif_QuCcPPRDC5IYbdWEBzqC8k6I-3stCyd9w7ry1Mb55erFbC7DHJ3y-_7OGMPbc0r1EpA0__u4Hr-DJcyxYC1JIqe0ATjkbQ5F1pvkP9wx9KVWvVNmhyWN0cDqhFULQv_S_bMxK0RztZeAh86uNrV0ImeDpkkIIDRpqO0HMyMWbjRwP8J2hswnDcMkyhcNSo_nTFtxjzd9bYYpwwIXnwvGiu2cXvR1JCjH2Fh-rg1QnxvrzHke_4MrB-tcbl4L_M1kQJyuMfx47sXs07518aQyOsZ3El2mgRWqWSLxmTn4YYwXYJbR7DRcNUGsWh39evDjInT9frDAEAuRd542_C8jakbaVTL4kZIHFil9skahPvLFg32IW2mljowBR1IsG75XlktZNSf3uuovJaB1YVT5lo_Cy_Vonq-3227THoG2orZ1eDQ2YW22e28TOoye-C6oUniy8KYRjxekRt_x4xZQ66SDgjxRaAZhj4n7gjl-KG0brOkRp2mTgAW5_J78UUmHZ6kaVD4-5e8-lGNQiek9heCbuoXYK5am99HvOX5IxyUcOL7uRD1_nWE3HUX7GpjeqZshhgDQoFo-Nr1QaK8OkZVs7Pez6taMZxgAmKC4I9hX1skRQlDUQheC4CByFOdCNk8f58wx3G0TVWTdWPeGCNu4QcekP7JVZ2x9ZySbRMcfhrX9DSuvmHL7Nmt8sQDX0hrmL_SppdfpFGzIxWNF2XfG1LAalFcLH0SW0eseGDfoCaOABerBrowgLVWQ0EhAwSXtwSDOl4no9nAtz52cH1FjQIEUD" style="color:blue">Juri Optiz, 2024</a></span>
       </p>
     </div>
 
     <!-- Tooltip to explain the imbalance degree -->
-    <div class="absolute text-white text-2xl font-bold" style="top: 53.5%; left: 67.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
-      <p class="text-blue-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">This is a custom tooltip!</span>
+    <div class="absolute text-white text-2xl leading-tight" style="top: 52.8%; left: 79%; transform: translate(-50%, -50%); text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">
+      <p class="text-red-500 tooltip">
+        <b>[C7]</b>
+          <span class="tooltip-text">This feature analyses the 'level of imbalance' of a multiclass system. d( ζ, e ) represents a <b>distance operator</b> (such as euclidian distance) between the set of empirical class distributions and the balanced distribution. d( ιm , e ) represents the distance function between the distribution of exactly m minority classes with the furthest distance from e. Overall, this feature gives an idea of how imbalanced the multiclass system is. If this metric exceeds 1 it indicates that the dataset has a high distance discrepancies compared to its worst minority classes, suggesting macroF1, else suggesting accuracy. <a href="https://www.sciencedirect.com/science/article/pii/S016786551730257X?casa_token=AgSvL9q0NI8AAAAA:BwH1BUlU7T8ebj47DpBcmld_KwbGlfaDyQqockqr-QCpswZA_wrl_kXooG5gbuNN1FUszEWlZns" style="color:blue">Jonathan Ortigosa-Hernández, 2017</a></span>
       </p>
     </div>
 
-    <!-- Tooltip for multiclass "Are you concerned about the performance of specific classes?" -->
-    <div class="absolute text-white text-2xl font-bold" style="top: 57.5%; left: 78.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
-      <p class="text-blue-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">This is a custom tooltip!</span>
-      </p>
-    </div>
 
     <!-- Tooltip for multiclass "Is misclassification costly or otherwise problematic?" -->
-    <div class="absolute text-white text-2xl font-bold" style="top: 57.5%; left: 90.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+    <div class="absolute text-white text-2xl leading-tight" style="top: 54%; left: 88%; transform: translate(-50%, -50%); text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">
       <p class="text-blue-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">This is a custom tooltip!</span>
+        <b>[C8]</b>
+          <span class="tooltip-text">This question queries the user on the <b>severity</b> of wrong predictions. In a scenario where a misclassification is problematic (such as a rare disease), the user should want to understand the performance of their model in rare classes. In this case, macroF1 is suggested.<a href="https://link.springer.com/chapter/10.1007/978-3-030-82673-4_6" style="color:blue"> Matthew Fox, 2022</a></span>
       </p>
     </div>
 

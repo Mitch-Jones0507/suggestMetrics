@@ -93,7 +93,7 @@ def regression_analysis(df, features, target, is_polynomial, degree_of_polynomia
     influential_points = np.where(cooks_d > threshold)[0]
     outlier_rate = round(len(influential_points) / len(df), 2)
     if outlier_rate < 0.05:
-        result["outlier_rate"] = (outlier_rate * 100, 'R Square')
+        result["outlier_rate"] = (outlier_rate * 100, 'R Squared')
     else:
         result["outlier_rate"] = (outlier_rate * 100, 'MAE')
 
@@ -102,19 +102,19 @@ def regression_analysis(df, features, target, is_polynomial, degree_of_polynomia
         std = np.std(df[target], ddof=0)
         coefficient_of_variation = round(std / mean, 2)
         if coefficient_of_variation > 0.1:
-            result["coefficient_of_variation"] = (coefficient_of_variation, 'R Square')
+            result["coefficient_of_variation"] = (coefficient_of_variation, 'R Squared')
         else:
             result["coefficient_of_variation"] = (coefficient_of_variation, 'MAE')
     else:
         condition_number = round(np.linalg.cond(df[features].to_numpy()), 2)
         if condition_number < 30:
-            result["condition_number"] = (condition_number, 'R Square')
+            result["condition_number"] = (condition_number, 'R Squared')
         else:
             result["condition_number"] = (condition_number, 'MAE')
 
         subjects_per_predictor = round(len(df) / len(features), 2)
         if subjects_per_predictor > 10:
-            result["subjects_per_predictor"] = (subjects_per_predictor, 'R Square')
+            result["subjects_per_predictor"] = (subjects_per_predictor, 'R Squared')
         else:
             result["subjects_per_predictor"] = (subjects_per_predictor, 'MAE')
 
@@ -122,5 +122,5 @@ def regression_analysis(df, features, target, is_polynomial, degree_of_polynomia
         if degree_of_polynomial == 'more than 3':
             result["degree_of_polynomial"] = (degree_of_polynomial, 'MAE')
         else:
-            result["degree_of_polynomial"] = (degree_of_polynomial, 'R Square')
+            result["degree_of_polynomial"] = (degree_of_polynomial, 'R Squared')
     return result

@@ -17,7 +17,7 @@
       visibility: hidden;
       width: 400px;
       background-color: white;
-      border: 2px solid black;
+      border: 2px solid royalblue;
       text-align: left;
       font-size: 14px;
       text-shadow: none;
@@ -79,110 +79,71 @@
     <img src="../static/images/MODEL_RELATION.png" alt="Sample Image" />
 
     <!-- Tooltip for "What is the target variable(TV)?" -->
-    <div class="absolute text-white text-2xl" style="top: 10%; left: 41.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+    <div class="absolute text-white text-2xl leading-tight" style="top: 10%; left: 41.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">
       <p class="text-blue-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">This is a custom tooltip!</span>
+        <b>[MR1]</b>
+          <span class="tooltip-text">This question defines the <b>target</b> variable that the user is looking to understand. This information directly shapes metric choice as the nature of this data may suit one metric over the other. This also guides visualisation processes.</span>
       </p>
     </div>
 
     <!-- Tooltip for "Will it fit a polynomial function to capture curvature in the data?" -->
-    <div class="absolute text-white text-2xl" style="top: 19%; left: 41.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+    <div class="absolute text-white text-2xl leading-tight" style="top: 20%; left: 39.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">
       <p class="text-blue-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">This is a custom tooltip!</span>
+        <b>[MR2]</b>
+        <span class="tooltip-text">This question allows the system to understand what regression line/surface the user is expecting to fit to their data. The answer to this question guides the system to different queries and feature analyses.</span>
       </p>
     </div>
 
     <!-- Tooltip for "What are the predictor variables?" -->
-    <div class="absolute text-white text-2xl" style="top: 34%; left: 45%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+    <div class="absolute text-white text-2xl leading-tight" style="top: 33.8%; left: 46.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">
       <p class="text-blue-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">This is a custom tooltip!</span>
-      </p>
-    </div>
-
-    <!-- Tooltip for "Condition number" explanation -->
-    <div class="absolute text-white text-2xl" style="top: 61.8%; left: 5.2%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
-      <p class="text-blue-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">The condition number measures how sensitive a regression model or matrix is to small changes in the data. It is calculated using the ratio
-        of the largest to smallest eigenvalues. A high condition number suggests multicollinearity — meaning predictors are highly correlated, making the model unstable. A
-        low condition number means the model is well-behaved and reliable. It helps diagnose problems before fitting a regression.</span>
+        <b>[MR3]</b>
+        <span class="tooltip-text">This question fully defines the <b>feature space</b> for the model relation task. This allows the user to analyse exactly the predictors and targets that will be used in their model down the line.</span>
       </p>
     </div>
 
     <!-- Tooltip for "Subject per Predictor" formula -->
-    <div class="absolute text-white text-2xl" style="top: 60%; left: 11.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+    <div class="absolute text-white text-2xl leading-tight" style="top: 60%; left: 10.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">
       <p class="text-red-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">n represents the total number of subjects in the dataset.<br><br>p represents the total number of predictors in the model.</span>
+        <b>[MR4]</b>
+          <span class="tooltip-text">In a multidimensional space, SPV relates to the ratio of instances (n) per predictor variable (p). <b>Overfitting</b> is very likely with a model trained on data that has an SPV of less than 10, making R squared an artificially high metric due to its monotonicity with respect to the inclusion of predictors. <a href="https://www.sciencedirect.com/science/article/pii/S0895435615000141" style="color:blue">Peter Austin, 2015</a></span>
       </p>
     </div>
 
-    <!-- Tooltip for "Outlier Rate" explanation -->
-    <div class="absolute text-white text-2xl" style="top: 61.8%; left: 20.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
-      <p class="text-blue-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">In regression, the outlier rate refers to the proportion of data points that significantly deviate from the expected relationship between
-        variables. These outliers can distort model accuracy by disproportionately influencing the regression line. Identifying and addressing outliers is crucial for
-        improving model performance and ensuring more reliable predictions.</span>
-      </p>
-    </div>
 
     <!-- Tooltip for "Coefficient of Variation" formula -->
-    <div class="absolute text-white text-2xl" style="top: 60.5%; left: 29%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+    <div class="absolute text-white text-2xl leading-tight" style="top: 60%; left: 29%; transform: translate(-50%, -50%); text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">
       <p class="text-red-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">σ represents the standard deviation of the data.<br><br>μ represents the mean of the data.</span>
+        <b>[MR5]</b>
+          <span class="tooltip-text">This feature analyses the <b>variance</b> of the target variable, or the 'spread' about its mean. σ represents the standard deviation of the data, μ represents the mean of the data. Since MAE does not emphasise error as greatly as R squared does, a high variance will attribute to MAE, else R squared is suggested.</span>
       </p>
     </div>
 
     <!-- Tooltip for "Coefficient of Outlier Rate" formula -->
-    <div class="absolute text-white text-2xl" style="top: 56.8%; left: 44.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+    <div class="absolute text-white text-2xl leading-tight" style="top: 56.8%; left: 44.5%; transform: translate(-50%, -50%); text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">
       <p class="text-red-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">eᵢ represents the residual for the i-th observation (difference between actual and predicted value).<br><br>p represents the number of
-        predictors in the model.<br><br>s² represents mean squared error - an estimate of the variance of the residuals.<br><br>hᵢᵢ represents the leverage value for the
-        i-th observation (how much influence that point has).</span>
+        <b>[MR6]</b>
+          <span class="tooltip-text">Cook's distance identifies <b>influential data points</b> that disproportionally effect the fitted model, and can categorise these points as 'outliers'. eᵢ represents the residual for the i-th observation (difference between actual and predicted value).p represents the number of
+        predictors in the model. s² represents mean squared error - an estimate of the variance of the residuals.hᵢᵢ represents the leverage value for the
+        i-th observation (how much influence that point has). AS R squared penalises outliers more severely, once the percentage of outliers within the dataset reaches a great enough level, MAE is suggested over R squared as it is less sensitive to extreme values.<a href="https://www.sciencedirect.com/science/article/pii/S0378375802004949?casa_token=7ixb0bXCh7oAAAAA:_lFW-5WEB-O2s_ScbbqGrzjnpqeWrjkdJQm5ImT9AeDPuRp14GE87Mgc1T6FkNLumhownT86BWk" style="color:blue"> José Díaz García, 2004</a></span>
       </p>
     </div>
 
-    <!-- Tooltip for "Coefficient of Variation" explanation -->
-    <div class="absolute text-white text-2xl" style="top: 61.8%; left: 55%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
-      <p class="text-blue-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">The coefficient of variation (CV) in regression is a statistical measure of the relative variability of a dataset. It is the ratio of
-        the standard deviation to the mean, expressed as a percentage. A higher CV indicates greater variability in the data relative to the mean, which helps assess
-        risk or consistency.</span>
-      </p>
-    </div>
 
     <!-- Tooltip for "What is the highest degree polynomial term to be used in your model?"-->
-    <div class="absolute text-white text-2xl" style="top: 61.8%; left: 62%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+    <div class="absolute text-white text-2xl leading-tight" style="top: 61%; left: 62%; transform: translate(-50%, -50%); text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">
       <p class="text-blue-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">In regression, the highest degree polynomial term refers to the most complex transformation of the predictor variable considered for
-        splitting the data. The highest degree polynomial term is relevant when considering feature engineering, but decision trees focus more on data segmentation than
-         polynomial relationships.</span>
+        <b>[MR7]</b>
+          <span class="tooltip-text">This question details the highest degree polynomial term that the user is likely to use in their model. Higher degree polynomial terms are likely to lead to <b>overfitting</b>, artificially boosting R squared. In this case, MAE is suggested in order to reduce this risk.</span>
       </p>
     </div>
 
-    <!-- Tooltip for "Subjects per Predictor (SPV)" explained-->
-    <div class="absolute text-white text-2xl" style="top: 61.4%; left: 76.7%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
-      <p class="text-blue-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">"Subject per predictor" in regression refers to the number of data points (subjects) available for each predictor (independent variable)
-        in a model. A higher ratio ensures more reliable and stable estimates of regression coefficients. Too few subjects per predictor may lead to overfitting, unreliable
-        results, or poor generalisation.</span>
-      </p>
-    </div>
 
     <!-- Tooltip for "Condition Number (CN)" formula-->
-    <div class="absolute text-white text-2xl" style="top: 58.4%; left: 81.7%; transform: translate(-50%, -50%); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);">
+    <div class="absolute text-white text-2xl leading-tight" style="top: 58.4%; left: 81.7%; transform: translate(-50%, -50%); text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">
       <p class="text-red-500 tooltip">
-        <b>[?]</b>
-        <span class="tooltip-text">λₘₐₓ represents the largest eigenvalue of the dataset.<br><br>λₘᵢₙ represents the smallest eigenvalue of the dataset.</span>
+        <b>[MR8]</b>
+          <span class="tooltip-text">The condition number represents the <b>multicollinearity</b> of predictors in a multidimensional model. λₘₐₓ represents the largest eigenvalue of the dataset.λₘᵢₙ represents the smallest eigenvalue of the dataset. When two or more predictors are highly correlated, R squared can be a misleading metric as it can remain high despite individual regression coefficients being unreliable. In a case of high multicollinearity, MAE is suggested instead. <a href="https://synapse.koreamed.org/articles/1156320" style="color:blue">Jong Hae Kim, 2019</a></span>
       </p>
     </div>
 

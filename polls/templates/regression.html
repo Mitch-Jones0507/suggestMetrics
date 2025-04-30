@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Bar Example</title>
+    <title>suggestMetrics</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
     <meta charset="UTF-8">
@@ -35,18 +35,17 @@
             </div>
 
             <!-- Right: Log in Button -->
-            <div class="hidden md:block">
-                <a href="#" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-                    Log in
-                </a>
-            </div>
         </div>
     </div>
 </header>
 <div class="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-start py-10 px-4">
-    <div class="w-full max-w-2xl bg-white rounded-2xl p-8 shadow-2xl flex flex-col gap-8">
+    <div class="w-full max-w-3xl bg-white rounded-2xl p-8 shadow-2xl flex flex-col gap-8">
+    <h1 class="text-[24px] font-semibold text-gray-700 mb-[-15px] text-center">Suggestion: Model Relation</h1>
+        <p>This section details which <b>features</b> and <b>requirements</b> of your specific model relation case attribute to a given regression <b>performance metric</b>. A score is calculated and presented in the coloured box. <i>Note: when there is no particular case for either metric, consider using both suggested metrics in your model evaluation</i>.</p>
         <div id="suggestion" class="bg-gray-100 p-6 rounded-xl text-gray-700 text-sm"></div>
         <div id="chartContainer" class="bg-gray-100 p-6 rounded-xl"></div>
+    <h1 class="text-[18px] font-semibold text-gray-700 mb-[-15px]">Feature Weightings</h1>
+        <p>This section allows you to edit the degree of influence a particular feature or requirement has on which metric is suggested. Carefully consider which feature and requirement play a larger factor in your task.</p>
         <div class="slider-group flex flex-col gap-8">
             {% for key,_ in result.items %}
                 <div class="slider-block">
@@ -86,10 +85,14 @@
     function generate_suggestion() {
         let suggestion = "";
 
+                    suggestion += `
+            <span><h1 class="text-[18px] font-semibold text-gray-700 mb-2">Data Features:</h1></span>
+            `
+
         suggestion += `
-        <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mb-2 shadow-sm">
+        <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mt-3 mb-3 shadow-sm">
             <span class="text-gray-700 text-sm">
-                Percentage of outliers within the dataset is:
+                Percentage of outliers <span class="text-blue-700 text-sm"><a href="/suggestMetrics/regressionExplained">[MR6]</a></span> within the dataset is
                 <span class="font-semibold">{{ result.outlier_rate.0 }}%</span>,
                 so <span class="font-semibold">{{ result.outlier_rate.1 }}</span> is suggested.
             </span>
@@ -98,9 +101,9 @@
 
         {% if result.coefficient_of_variation %}
             suggestion += `
-            <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mb-2 shadow-sm">
+            <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mt-3 mb-3 shadow-sm">
                 <span class="text-gray-700 text-sm">
-                    Coefficient of Variation is
+                    Coefficient of Variation <span class="text-blue-700 text-sm"><a href="/suggestMetrics/regressionExplained">[MR5]</a></span> is
                     <span class="font-semibold">{{ result.coefficient_of_variation.0 }}</span>,
                     so <span class="font-semibold">{{ result.coefficient_of_variation.1 }}</span> is suggested.
                 </span>
@@ -108,18 +111,18 @@
         `;
         {% else %}
             suggestion += `
-            <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mb-2 shadow-sm">
+            <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mt-3 mb-3 shadow-sm">
                 <span class="text-gray-700 text-sm">
-                    Condition Number is
+                    Condition Number <span class="text-blue-700 text-sm"><a href="/suggestMetrics/classificationExplained">[MR8]</a></span> is
                     <span class="font-semibold">{{ result.condition_number.0 }}</span>,
                     so <span class="font-semibold">{{ result.condition_number.1 }}</span> is suggested.
                 </span>
             </div>
         `;
             suggestion += `
-            <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mb-2 shadow-sm">
+            <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mt-3 mb-3 shadow-sm">
                 <span class="text-gray-700 text-sm">
-                    Subjects per Predictor is
+                    Subjects per Predictor <span class="text-blue-700 text-sm"><a href="/suggestMetrics/classificationExplained">[MR4]</a></span> is
                     <span class="font-semibold">{{ result.subjects_per_predictor.0 }}</span>,
                     so <span class="font-semibold">{{ result.subjects_per_predictor.1 }}</span> is suggested.
                 </span>
@@ -128,10 +131,14 @@
         {% endif %}
 
         {% if result.degree_of_polynomial %}
+                        suggestion += `
+            <span><h1 class="text-[18px] font-semibold text-gray-700 mb-2">User Requirements:</h1></span>
+            `
+
             suggestion += `
-            <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mb-2 shadow-sm">
+            <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg mt-3 mb-3 shadow-sm">
                 <span class="text-gray-700 text-sm">
-                    The degree of Polynomial is
+                    The degree of polynomial <span class="text-blue-700 text-sm"><a href="/suggestMetrics/classificationExplained">[MR7]</a></span> is
                     <span class="font-semibold">{{ result.degree_of_polynomial.0 }}</span>,
                     so <span class="font-semibold">{{ result.degree_of_polynomial.1 }}</span> is suggested.
                 </span>
@@ -150,26 +157,41 @@
         {% endfor %}
 
         if (r_square_score > mae_score) {
+
+                        suggestion += `
+            <span><h1 class="text-[18px] font-semibold text-gray-700 mb-2">Final Suggestion:</h1></span>
+            `
+
             suggestion += `
-            <div class="flex items-center gap-2 p-3 bg-green-50 rounded-lg mb-2 shadow-sm">
+            <div class="flex items-center gap-2 p-3 bg-green-50 rounded-lg mt-3 mb-3 shadow-sm">
                 <span class="text-gray-700 text-sm">
                     To sum up, <span class="font-semibold">R square</span> metric performs better for this dataset.
                 </span>
             </div>
         `;
         } else if (r_square_score < mae_score) {
+
+                        suggestion += `
+            <span><h1 class="text-[18px] font-semibold text-gray-700 mb-2">Final Suggestion:</h1></span>
+            `
+
             suggestion += `
-            <div class="flex items-center gap-2 p-3 bg-green-50 rounded-lg mb-2 shadow-sm">
+            <div class="flex items-center gap-2 p-3 bg-green-50 rounded-lg mt-3 mb-3 shadow-sm">
                 <span class="text-gray-700 text-sm">
                     To sum up, <span class="font-semibold">MAE</span> metric performs better for this dataset.
                 </span>
             </div>
         `;
         } else {
+
+                        suggestion += `
+            <span><h1 class="text-[18px] font-semibold text-gray-700 mb-2">Final Suggestion:</h1></span>
+            `
+
             suggestion += `
-            <div class="flex items-center gap-2 p-3 bg-yellow-50 rounded-lg mb-2 shadow-sm">
+            <div class="flex items-center gap-2 p-3 bg-yellow-50 rounded-lg mt-3 mb-3 shadow-sm">
                 <span class="text-gray-700 text-sm">
-                    To sum up, both <span class="font-semibold">R square</span> and <span class="font-semibold">MAE</span> metrics perform well for this dataset.
+                    To sum up, both <span class="font-semibold">R squared</span> and <span class="font-semibold">MAE</span> metrics perform well for this dataset.
                 </span>
             </div>
         `;
